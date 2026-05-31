@@ -3,61 +3,93 @@
   height: 100vh;
   justify-content: center;
   align-items: center;
+  background-color: #f4f4f4; 
+  /* Adds a very subtle technical dot-grid background */
+  background-image: radial-gradient(#ccc 1px, transparent 1px);
+  background-size: 20px 20px;
 }
 
 .login-card {
   background-color: white;
-  padding: 40px;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  padding: 48px 40px;
+  border-radius: 8px; /* Sharp, authoritative corners */
+  border: 2px solid #1a1a1a; /* Thick, defining outline */
+  /* Hard offset shadow using your brand red for a striking, modern look */
+  box-shadow: 8px 8px 0px #dc0032; 
   width: 100%;
   max-width: 400px;
-  text-align: center;
+  text-align: left; /* Left alignment feels more like a formal financial document */
 }
 
 .login-title {
   font-family: 'Lexend', sans-serif;
   color: #1a1a1a;
-  margin-bottom: 10px;
+  margin-bottom: 4px;
+  font-weight: 700;
+  text-transform: uppercase; /* Editorial authority */
+  letter-spacing: 1px;
+  font-size: 24px;
 }
 
 .login-subtitle {
   color: #666;
-  margin-bottom: 30px;
+  margin-bottom: 32px;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  border-bottom: 1px solid #eee; /* Structural dividing line */
+  padding-bottom: 16px;
 }
 
 .login-form {
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: 24px;
 }
 
 .login-input {
-  padding: 12px;
-  border-radius: 6px;
-  border: 1px solid #ccc;
+  padding: 12px 16px;
+  border-radius: 0;
+  border: 1px solid #1a1a1a; /* Stark borders matching the card */
   font-family: 'Inter', sans-serif;
-  font-size: 14px;
+  font-size: 15px;
+  color: #1a1a1a;
+  background-color: white;
+  transition: all 0.15s ease;
+}
+
+.login-input::placeholder {
+  color: #999;
 }
 
 .login-input:focus {
   outline: none;
+  border-width: 2px;
   border-color: #dc0032;
+  padding: 11px 15px; /* Prevent layout shift when border gets thicker */
 }
 
 .login-button {
   background-color: #dc0032;
   color: white;
-  padding: 14px;
-  border-radius: 6px;
-  border: none;
+  padding: 16px;
+  border-radius: 0;
+  border: 2px solid #dc0032;
   cursor: pointer;
   font-family: 'Lexend', sans-serif;
-  font-weight: 500;
+  font-weight: 600;
   font-size: 16px;
-  transition: background-color 0.2s ease;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-top: 10px;
+  transition: all 0.2s ease;
 }
 
 .login-button:hover {
-  background-color: #b30029; 
+  background-color: white; 
+  color: #dc0032; /* Inverts the button on hover for a high-contrast interaction */
+}
+
+.login-button:active {
+  transform: translate(2px, 2px); /* Physical "pushing down" effect */
 }
