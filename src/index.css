@@ -1,0 +1,18 @@
+html, body, #root {
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+  height: 100vh;
+  box-sizing: border-box;
+  overflow: hidden; /* Prevents double scrollbars */
+  background-color: #f4f4f5;
+  font-family: 'Inter', sans-serif;
+ scroll-behavior: smooth;
+}
+
+/* To make my MainLayout component stretch fully */
+.app-container {
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+}

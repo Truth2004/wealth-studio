@@ -1,0 +1,146 @@
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #fafafa;
+  font-family: 'Inter', sans-serif;
+  color: #1a1a1a;
+  -webkit-font-smoothing: antialiased;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.app-container {
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+}
+
+.main-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+}
+
+.page-content {
+  padding: 40px;
+  flex: 1;
+}
+
+h1, h2, h3 {
+  font-family: 'Lexend', sans-serif; 
+}
+
+
+/*Explainer*/
+.explainer-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+/* New wrapper to group the text and the icon together */
+.explainer-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+}
+
+.shimmer-text {
+  font-weight: 700;
+  border-bottom: 1px dotted #d4af37;
+  
+  /* The Shimmer Effect */
+  background: linear-gradient(90deg, #1a1a1a 0%, #d4af37 50%, #1a1a1a 100%);
+  background-size: 200% auto;
+  color: transparent;
+  -webkit-background-clip: text;
+  background-clip: text;
+  animation: shimmer 3s linear infinite;
+  transition: opacity 0.2s ease;
+}
+
+/* Icon styling */
+.explainer-icon {
+  color: #d4af37;
+  transition: transform 0.2s ease;
+}
+
+.explainer-trigger:hover .shimmer-text {
+  opacity: 0.8;
+}
+
+.explainer-trigger:hover .explainer-icon {
+  transform: scale(1.15);
+}
+
+@keyframes shimmer {
+  to { background-position: 200% center; }
+}
+
+.result-card.primary .shimmer-text {
+  background: linear-gradient(90deg, #ffffff 0%, #ffeb99 50%, #ffffff 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  border-bottom-color: #ffffff;
+}
+
+.result-card.primary .explainer-icon {
+  color: #ffffff;
+  opacity: 0.9;
+}
+
+.explainer-popup {
+  position: absolute;
+  bottom: 100%; 
+  left: 50%;
+  transform: translateX(-50%);
+  margin-bottom: 12px;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  width: 260px;
+  padding: 16px;
+  z-index: 100;
+  border: 1px solid #eaeaea;
+  animation: slideUp 0.2s ease forwards;
+  text-align: left;
+  text-transform: none;
+  letter-spacing: normal;
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translate(-50%, 10px); }
+  to { opacity: 1; transform: translate(-50%, 0); }
+}
+
+.explainer-popup::after { 
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -6px;
+  border-width: 6px;
+  border-style: solid;
+  border-color: #ffffff transparent transparent transparent;
+}
+
+.explainer-header {
+  font-family: 'Lexend', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  color: #dc0032;
+  margin-bottom: 6px;
+}
+
+.explainer-body {
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  color: #666;
+  line-height: 1.5;
+  font-weight: 400;
+}

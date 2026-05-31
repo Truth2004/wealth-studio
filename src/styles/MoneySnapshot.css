@@ -1,0 +1,361 @@
+.snapshot-welcome {
+  margin-bottom: 32px;
+}
+
+.snapshot-welcome-subtitle {
+  color: #dc0032;
+  font-size: 18px;
+  margin-bottom: 8px;
+  margin-top: 0;
+}
+
+.snapshot-welcome-title {
+  font-size: 42px;
+  margin: 0;
+  color: #1a1a1a;
+}
+
+.snapshot-welcome-desc {
+  color: #666;
+  margin-top: 8px;
+}
+
+.text-gold {
+  color: #d4af37;
+}
+
+/*Intro section*/
+.blueprint-section {
+  margin-top: 40px; 
+  padding-top: 48px; 
+  margin-bottom: 48px;
+  padding-bottom: 48px;
+  border-top: 2px solid #1a1a1a;    
+  border-bottom: 2px solid #1a1a1a; 
+}
+
+.blueprint-header {
+  text-align: center;
+  max-width: 880px; 
+  margin: 0 auto 56px auto; 
+}
+
+.blueprint-title {
+  display: inline-block; 
+  font-family: 'Lexend', sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 2px solid #1a1a1a;
+  line-height: 1.4;
+}
+
+.blueprint-intro {
+  font-size: 16px;
+  color: #666;
+  line-height: 1.7;
+  margin: 0;
+}
+
+.blueprint-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 40px;
+}
+
+.blueprint-column h3 {
+  font-family: 'Lexend', sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 2px solid #1a1a1a; 
+}
+
+.blueprint-column p {
+  font-size: 14px;
+  color: #666;
+  line-height: 1.7;
+  margin: 0;
+}
+
+/*My main layout*/
+.snapshot-grid {
+  display: grid;
+  grid-template-columns: 350px 1fr 1fr;
+  gap: 24px;
+  margin-top: 24px;
+}
+
+
+.input-card {
+  background-color: #ffffff;
+  padding: 32px;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+  grid-row: span 2; 
+}
+
+.h-fit {
+  height: fit-content;
+}
+
+.input-card h3 {
+  font-family: 'Lexend', sans-serif;
+  font-size: 18px;
+  margin-bottom: 24px;
+  color: #1a1a1a;
+  text-transform: uppercase;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.mb-0 {
+  margin-bottom: 0 !important;
+}
+
+.form-group label {
+  display: block;
+  font-size: 12px;
+  font-weight: 600;
+  color: #dc0032; 
+  margin-bottom: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.form-group p {
+  font-size: 12px;
+  color: #999;
+  margin-bottom: 8px;
+}
+
+.input-wrapper {
+  display: flex;
+  align-items: center;
+  background-color: #f4f4f5;
+  border-radius: 8px;
+  padding: 0 16px;
+}
+
+.currency-symbol {
+  color: #dc0032;
+  font-weight: 600;
+  margin-right: 8px;
+}
+
+.financial-input {
+  border: none;
+  background: transparent;
+  padding: 16px 0;
+  font-family: 'Inter', sans-serif;
+  font-size: 16px;
+  width: 100%;
+  color: #1a1a1a;
+}
+
+.financial-input:focus {
+  outline: none;
+}
+
+
+.advanced-toggle-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #666;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  margin: 24px 0 16px 0;
+  text-transform: uppercase;
+  transition: color 0.2s ease;
+}
+
+.advanced-toggle-btn:hover {
+  color: #1a1a1a;
+}
+
+.advanced-inputs-panel {
+  background-color: #f9f9f9;
+  padding: 16px;
+  border-radius: 8px;
+  margin-bottom: 16px;
+}
+
+.calc-button {
+  width: 100%;
+  background-color: #dc0032;
+  color: white;
+  border: none;
+  padding: 16px;
+  border-radius: 8px;
+  font-family: 'Lexend', sans-serif;
+  font-weight: 600;
+  font-size: 16px;
+  cursor: pointer;
+  margin-top: 16px;
+  transition: background-color 0.2s ease;
+}
+
+.calc-button:hover {
+  background-color: #b30029;
+}
+
+
+.result-card {
+  background-color: #ffffff;
+  padding: 32px;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.result-card.primary {
+  background-color: #dc0032;
+  color: white;
+}
+
+.card-label {
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 16px;
+}
+
+.result-card:not(.primary) .card-label {
+  color: #dc0032;
+}
+
+.result-card.primary .card-label,
+.result-card.primary .card-subtext {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.card-amount {
+  font-family: 'Lexend', sans-serif;
+  font-size: 48px;
+  font-weight: 700;
+  margin: 0;
+}
+
+.card-subtext {
+  font-size: 12px;
+  margin-top: auto;
+  padding-top: 24px;
+}
+
+.result-card:not(.primary) .card-subtext {
+  color: #dc0032;
+  font-weight: 600;
+}
+
+/*Spending distribution chart*/
+.chart-card {
+  background-color: #ffffff;
+  padding: 32px;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+  grid-column: span 2; 
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.chart-card h3 {
+  font-family: 'Lexend', sans-serif;
+  font-size: 18px;
+  margin-bottom: 32px;
+  color: #1a1a1a;
+  text-transform: uppercase;
+}
+
+.chart-layout {
+  display: flex;
+  align-items: center;
+  justify-content: space-around; 
+  gap: 32px;
+}
+
+.chart-container {
+  width: 200px; 
+  height: 200px;
+  flex-shrink: 0;
+}
+
+.chart-empty-state {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #999;
+  background-color: #f4f4f5;
+  border-radius: 50%;
+  font-size: 12px;
+  text-align: center;
+  padding: 16px;
+}
+
+.chart-breakdown {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.breakdown-item {
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #eaeaea;
+}
+
+.breakdown-item:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.breakdown-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.color-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+}
+
+/* Breakdown colors */
+.bg-needs { background-color: #dc0032; }
+.bg-debt { background-color: #d4af37; }
+.bg-leftover { background-color: #00a2e8; }
+
+.text-needs { color: #dc0032; }
+.text-debt { color: #d4af37; }
+.text-leftover { color: #00a2e8; }
+
+.breakdown-label {
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.breakdown-amount {
+  font-family: 'Lexend', sans-serif;
+  font-size: 20px;
+  font-weight: 600;
+  color: #1a1a1a;
+}
+
