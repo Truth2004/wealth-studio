@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import { FlaskConical, Home, CarFront, Receipt, CheckCircle2 } from 'lucide-react';
+import { FlaskConical, Home, CarFront, ShieldCheck, CheckCircle2 } from 'lucide-react';
 import TopBar from '../components/TopBar';
 import Explainer from '../components/Explainer';
 import '../styles/SimulationLab.css';
@@ -18,7 +18,7 @@ const SimulationLab = () => {
         'Hidden Costs of JHB Ownership'
       ],
       inputs: ['MONTHLY RENT', 'PURCHASE PRICE', 'DEPOSIT'],
-      isActive: false // Set to false
+      isActive: true 
     },
     {
       id: 'car-vs-invest',
@@ -30,19 +30,19 @@ const SimulationLab = () => {
         'Compounding Opportunity Loss'
       ],
       inputs: ['VEHICLE PRICE', 'TERM', 'INDEX FUND'],
-      isActive: true // Set to true!
+      isActive: true 
     },
     {
       id: 'tax-free-booster',
       title: 'Tax-Free Account Booster',
-      icon: <Receipt className="module-icon" />,
-      description: 'Maximize your tax-free growth. Compare a standard savings account against the R36,000 annual limit in an ABSA Tax-Free Savings Account.',
+      icon: <ShieldCheck className="module-icon" />,
+      description: <>Harness the mathematical phenomenon of "Tax Alpha" under SA law. Compare a specialized <Explainer term="TFSA" explanation="Tax-Free Savings Account. A government-regulated wrapper where all interest, dividends, and capital gains are 100% tax-free." /> wrapper against standard taxable accounts to optimize long-term compounding.</>,
       learnItems: [
-        'Total tax savings over 5 years',
-        <><Explainer term="Capital gains tax" explanation="A tax placed by SARS on the profit made from the sale of an asset (like stocks or property). Tax-Free Savings Accounts are legally exempt from this tax." /> exemptions</>
+        'Lifetime Limit Optimization (R500k ceiling)',
+        <><Explainer term="Capital Gains Tax" explanation="A tax placed by SARS on the profit made from the sale of an asset (like stocks or property). Tax-Free Savings Accounts are legally exempt from this tax." /> (CGT) Shielding</>
       ],
-      inputs: ['CONTRIBUTION', 'RETURN RATE', 'TAX BRACKET'],
-      isActive: false
+      inputs: ['MONTHLY DEPOSIT', 'EXPECTED RETURN', 'TAX BRACKET'],
+      isActive: true // <-- NOW ACTIVE!
     }
   ];
 
@@ -97,7 +97,7 @@ const SimulationLab = () => {
               </div>
 
               <button 
-                className="sim-button" 
+                className={`sim-button ${mod.isActive && mod.id === 'tax-free-booster' ? 'sim-button-emerald' : ''}`} 
                 onClick={() => handleSelectModule(mod.id)}
                 disabled={!mod.isActive}
               >

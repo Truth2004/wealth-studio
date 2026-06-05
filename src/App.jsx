@@ -7,6 +7,8 @@ import StrategyTracks from './pages/StrategyTracks';
 import ActiveTrackView from './pages/ActiveTrackView'; 
 import SimulationLab from './pages/SimulationLab';
 import CarVsInvestModule from './pages/CarVsInvestModule';
+import RentVsBuyModule from './pages/RentVsBuyModule';
+import TaxFreeBoosterModule from './pages/TaxFreeBoosterModule';
 import Support from './pages/Support';
 import Sidebar from './components/Sidebar';
 import Footer from './components/Footer';
@@ -55,7 +57,10 @@ function App() {
             <Route path="/strategy-tracks/:trackId" element={<ActiveTrackView />} />
             <Route path="/simulation-lab" element={<SimulationLab />} />
             <Route path="/simulation-lab/car-vs-invest" element={<CarVsInvestModule />} />
+            <Route path="/simulation-lab/rent-vs-buy" element={<RentVsBuyModule />} />
+            <Route path="/simulation-lab/tax-free-booster" element={<TaxFreeBoosterModule />} />
             <Route path="/support" element={<Support />} />
+            
           </Route>
         </Routes>
       </BrowserRouter>

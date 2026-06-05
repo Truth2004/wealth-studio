@@ -342,3 +342,390 @@
 .breakdown-value.gold {
   color: #d4af37;
 }
+
+/* =========================================
+   RENT VS BUY EQUILIBRIUM SPECIFICS
+========================================= */
+
+.rvb-grid {
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  gap: 24px;
+  margin-top: 24px;
+}
+
+.rvb-inputs-column {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* Custom Sliders for RVB */
+.rvb-input-card {
+  background-color: #fcfaf9; /* Slight off-white to match screenshot */
+  padding: 32px;
+  border-radius: 16px;
+  border: 1px solid #eaeaea;
+}
+
+.rvb-input-card h3 {
+  font-family: 'Lexend', sans-serif;
+  font-size: 16px;
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #1a1a1a;
+}
+
+.rvb-slider-group {
+  margin-bottom: 28px;
+}
+
+.rvb-slider-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.rvb-slider-label {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #666;
+  letter-spacing: 0.5px;
+}
+
+.rvb-slider-value {
+  font-family: 'Lexend', sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  color: #1a1a1a;
+}
+
+/* Custom Red Slider Range */
+.rvb-range {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 4px;
+  background: #eaeaea;
+  border-radius: 2px;
+  outline: none;
+}
+
+.rvb-range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #dc0032; /* ABSA Red */
+  cursor: pointer;
+  transition: transform 0.1s;
+}
+
+.rvb-range::-webkit-slider-thumb:hover {
+  transform: scale(1.2);
+}
+
+/* Time Horizon Pills */
+.rvb-pills-container {
+  display: flex;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.rvb-pill {
+  flex: 1;
+  padding: 8px 0;
+  text-align: center;
+  background-color: #eaeaea;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #666;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: none;
+}
+
+.rvb-pill.active {
+  background-color: #dc0032;
+  color: white;
+}
+
+/* Advisor Dark Card */
+.rvb-advisor-card {
+  background-color: #1a1a1a;
+  border-radius: 16px;
+  padding: 32px;
+  color: white;
+  position: relative;
+  overflow: hidden;
+}
+
+.advisor-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.advisor-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #d4af37;
+}
+
+.advisor-role {
+  font-size: 11px;
+  text-transform: uppercase;
+  color: #999;
+  letter-spacing: 0.5px;
+  margin-bottom: 4px;
+}
+
+.advisor-name {
+  font-family: 'Lexend', sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  margin: 0;
+}
+
+.advisor-quote {
+  font-size: 13px;
+  line-height: 1.6;
+  color: #ccc;
+  margin-bottom: 24px;
+}
+
+.rvb-preapprove-btn {
+  width: 100%;
+  background-color: #dc0032;
+  color: white;
+  border: none;
+  padding: 14px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.rvb-preapprove-btn:hover {
+  background-color: #b30029;
+}
+
+/* Results Column Layout */
+.rvb-results-column {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.rvb-verdict-large {
+  background-color: #ffffff;
+  border-radius: 16px;
+  padding: 40px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.verdict-left {
+  max-width: 320px;
+}
+
+.verdict-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background-color: #e6f4ea;
+  color: #1e8e3e;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 16px;
+}
+
+.verdict-large-title {
+  font-family: 'Lexend', sans-serif;
+  font-size: 32px;
+  font-weight: 700;
+  color: #1a1a1a;
+  line-height: 1.2;
+  margin: 0 0 8px 0;
+}
+
+.verdict-large-amount {
+  font-family: 'Lexend', sans-serif;
+  font-size: 32px;
+  font-weight: 700;
+  color: #1e8e3e;
+  margin: 0 0 16px 0;
+}
+
+.verdict-large-desc {
+  font-size: 13px;
+  color: #666;
+  line-height: 1.6;
+  margin-bottom: 32px;
+}
+
+.verdict-stats-row {
+  display: flex;
+  gap: 16px;
+}
+
+.verdict-stat-box {
+  background-color: #f9f9f9;
+  padding: 16px;
+  border-radius: 12px;
+  flex: 1;
+}
+
+.v-stat-label {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #999;
+  margin-bottom: 8px;
+}
+
+.v-stat-val {
+  font-family: 'Lexend', sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  color: #1a1a1a;
+}
+
+/* Chart Area */
+.verdict-chart-area {
+  position: relative;
+  width: 220px;
+  height: 220px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.chart-center-text {
+  position: absolute;
+  text-align: center;
+}
+
+.c-label {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #999;
+}
+
+.c-val {
+  font-family: 'Lexend', sans-serif;
+  font-size: 36px;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin: 4px 0;
+}
+
+.c-sub {
+  font-size: 10px;
+  font-weight: 700;
+  color: #1e8e3e;
+}
+
+/* Split Cards */
+.rvb-split-cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+
+.rvb-card {
+  background-color: #fcfaf9;
+  border-radius: 16px;
+  padding: 32px;
+}
+
+.rvb-card h4 {
+  font-family: 'Lexend', sans-serif;
+  font-size: 16px;
+  margin: 0 0 32px 0;
+  color: #1a1a1a;
+}
+
+/* Horizontal Bar Graphs */
+.rvb-bar-group {
+  margin-bottom: 32px;
+}
+
+.rvb-bar-label {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #666;
+  margin-bottom: 8px;
+}
+
+.rvb-bar-label .green-text {
+  color: #1e8e3e;
+}
+
+.rvb-bar-bg {
+  width: 100%;
+  height: 36px;
+  background-color: #eaeaea;
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 8px;
+}
+
+.rvb-bar-fill {
+  height: 100%;
+}
+
+.fill-grey { background-color: #d1d1d1; }
+.fill-green { background-color: #34d399; }
+
+.rvb-bar-sub {
+  font-size: 11px;
+  color: #999;
+}
+
+/* Footer Banner */
+.rvb-footer-banner {
+  background-color: #fbf5ff;
+  border-radius: 12px;
+  padding: 16px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 8px;
+}
+
+.footer-banner-text {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 12px;
+  color: #6b21a8;
+  font-weight: 500;
+}
+
+.footer-banner-link {
+  font-size: 11px;
+  font-weight: 700;
+  color: #9333ea;
+  text-transform: uppercase;
+  cursor: pointer;
+  letter-spacing: 0.5px;
+}

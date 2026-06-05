@@ -1,0 +1,533 @@
+/* =========================================
+   TAX-FREE BOOSTER SPECIFICS (MATCHED THEME)
+========================================= */
+
+.tf-page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 40px;
+}
+
+.tf-subtitle {
+  color: #dc0032;
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.tf-title {
+  font-family: 'Lexend', sans-serif;
+  font-size: 42px;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin: 0 0 12px 0;
+  line-height: 1.1;
+}
+
+.tf-desc {
+  max-width: 500px;
+  font-size: 14px;
+  color: #666;
+  line-height: 1.6;
+}
+
+/* Matched the Light Purple / Dark Purple Icon from RVB */
+.tf-market-status {
+  background-color: #fbf5ff;
+  padding: 16px 24px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.tf-market-icon {
+  color: #9333ea;
+}
+
+.tf-market-label {
+  font-size: 10px;
+  font-weight: 700;
+  color: #666;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.tf-market-value {
+  font-size: 14px;
+  font-weight: 700;
+  color: #1a1a1a;
+}
+
+/* --- GRID LAYOUT --- */
+.tf-main-grid {
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  gap: 32px;
+}
+
+.tf-col-left {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.tf-col-right {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* --- SCENARIO INPUTS CARD --- */
+.tf-inputs-card {
+  background-color: #fcfaf9;
+  border-radius: 16px;
+  padding: 32px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+}
+
+.tf-inputs-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-family: 'Lexend', sans-serif;
+  font-size: 18px;
+  color: #1a1a1a;
+  margin-bottom: 32px;
+}
+
+.tf-slider-group {
+  margin-bottom: 32px;
+}
+
+.tf-slider-labels {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.tf-slider-title {
+  font-size: 10px;
+  font-weight: 700;
+  color: #666;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.tf-slider-val {
+  font-family: 'Lexend', sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  color: #1a1a1a;
+}
+
+/* Custom slider with Matched Red Square Knobs */
+.tf-range-input {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 2px;
+  background: #eaeaea;
+  outline: none;
+  position: relative;
+}
+
+.tf-range-input::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 2px;
+  background: #dc0032;
+  cursor: pointer;
+  border: none;
+  transition: transform 0.1s;
+}
+
+.tf-range-input::-webkit-slider-thumb:hover {
+  transform: scale(1.1);
+}
+
+.tf-range-input::-moz-range-thumb {
+  width: 16px;
+  height: 16px;
+  border-radius: 2px;
+  background: #dc0032;
+  cursor: pointer;
+  border: none;
+  transition: transform 0.1s;
+}
+
+.tf-range-input::-moz-range-thumb:hover {
+  transform: scale(1.1);
+}
+
+/* Time Horizon Pills */
+.tf-pills {
+  display: flex;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.tf-pill {
+  flex: 1;
+  padding: 10px 0;
+  background-color: #eaeaea;
+  color: #666;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 700;
+  text-align: center;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.tf-pill.active {
+  background-color: #dc0032;
+  color: #fff;
+}
+
+/* --- ADVISOR CARD (RED) --- */
+.tf-advisor-card {
+  background-color: #dc0032;
+  border-radius: 16px;
+  padding: 32px;
+  color: white;
+}
+
+.tf-advisor-profile {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.tf-advisor-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: 2px solid #ffffff;
+  object-fit: cover;
+}
+
+.tf-advisor-role {
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.7);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 4px;
+}
+
+.tf-advisor-name {
+  font-family: 'Lexend', sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  margin: 0;
+}
+
+.tf-advisor-quote {
+  font-size: 13px;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.9);
+  margin-bottom: 24px;
+}
+
+.tf-btn-primary {
+  width: 100%;
+  background-color: #ffffff;
+  color: #dc0032;
+  border: none;
+  padding: 16px;
+  border-radius: 8px;
+  font-family: 'Lexend', sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  transition: background-color 0.2s;
+}
+.tf-btn-primary:hover { background-color: #f4f4f5; }
+
+/* --- MAIN VERDICT CARD --- */
+.tf-verdict-card {
+  background-color: #ffffff;
+  border-radius: 16px;
+  padding: 48px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+}
+
+/* Matched the Green 'Wins' Badge */
+.tf-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 24px;
+  background-color: #e6f4ea;
+  color: #1e8e3e;
+}
+
+.tf-verdict-title {
+  font-family: 'Lexend', sans-serif;
+  font-size: 32px;
+  color: #1a1a1a;
+  margin: 0 0 8px 0;
+}
+
+.tf-verdict-amount {
+  font-family: 'Lexend', sans-serif;
+  font-size: 36px;
+  font-weight: 700;
+  margin: 0 0 24px 0;
+  color: #1e8e3e;
+}
+
+.tf-verdict-text-p {
+  font-size: 13px;
+  color: #666;
+  line-height: 1.6;
+  margin-bottom: 24px;
+}
+
+/* Clean Key Impact Box */
+.tf-impact-box {
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 12px;
+  border: 1px solid #eaeaea;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+  margin-bottom: 32px;
+}
+
+.tf-impact-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #eaeaea;
+}
+
+.tf-impact-title {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #1a1a1a;
+  letter-spacing: 0.5px;
+  margin: 0;
+}
+
+.tf-impact-list {
+  margin: 0;
+  padding-left: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  color: #666;
+  font-size: 12px;
+}
+
+/* Chart Area */
+.tf-chart-wrapper {
+  height: 240px;
+  width: 100%;
+  margin-top: 24px;
+}
+
+.tf-chart-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 8px;
+}
+
+.tf-chart-title {
+  font-size: 12px;
+  font-weight: 700;
+  color: #1a1a1a;
+}
+
+.tf-chart-legend {
+  display: flex;
+  gap: 12px;
+  font-size: 10px;
+  font-weight: 700;
+  color: #666;
+}
+
+.tf-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.tf-legend-dot-tfsa {
+  width: 8px;
+  height: 8px;
+  background-color: #1e8e3e;
+  border-radius: 50%;
+}
+
+.tf-legend-line-taxable {
+  width: 12px;
+  border-top: 2px dashed #9333ea;
+}
+
+/* --- BOTTOM SPLIT CARDS --- */
+.tf-split-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+
+.tf-sub-card {
+  background-color: #fcfaf9;
+  border-radius: 16px;
+  padding: 32px;
+}
+
+.tf-sub-title {
+  font-family: 'Lexend', sans-serif;
+  font-size: 16px;
+  color: #1a1a1a;
+  margin: 0 0 24px 0;
+}
+
+/* Stacked Bars */
+.tf-bar-container { margin-bottom: 24px; }
+
+.tf-bar-top {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  font-weight: 700;
+  color: #666;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.tf-thick-bar {
+  width: 100%;
+  height: 48px; /* Matched the 48px thickness from RVB */
+  background-color: #eaeaea;
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 8px;
+  display: flex;
+}
+
+/* Matched the exact gradients from RVB */
+.tf-fill-base {
+  background-color: #d1d5db; 
+}
+
+.tf-fill-growth-tfsa {
+  background: linear-gradient(90deg, #10b981 0%, #34d399 100%);
+}
+
+.tf-fill-growth-taxable {
+  background: linear-gradient(90deg, #9333ea 0%, #c084fc 100%);
+}
+
+.tf-fill-tax-loss {
+  background: linear-gradient(90deg, #fca5a5 0%, #f87171 100%);
+}
+
+.tf-fill-protected {
+  background-color: #e6f4ea;
+  border: 1px dashed #1e8e3e;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  color: #1e8e3e;
+  font-weight: 700;
+}
+
+/* --- FOOTER & MODAL --- */
+.tf-footer-banner {
+  background-color: #fbf5ff;
+  border-radius: 12px;
+  padding: 16px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.tf-footer-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 12px;
+  color: #6b21a8;
+}
+
+.tf-footer-link {
+  font-size: 11px;
+  font-weight: 700;
+  color: #9333ea;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+}
+
+/* Modal */
+.tf-modal-overlay {
+  position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+  background-color: rgba(0, 0, 0, 0.75);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 9999; backdrop-filter: blur(4px);
+  animation: fadeIn 0.2s ease-out forwards;
+}
+
+.tf-modal-content {
+  background-color: #ffffff; padding: 32px; border-radius: 16px;
+  max-width: 550px; width: 90%; max-height: 90vh; overflow-y: auto;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4); position: relative; text-align: left;
+}
+
+.tf-modal-header {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-bottom: 24px; border-bottom: 1px solid #eaeaea; padding-bottom: 16px;
+}
+
+.tf-modal-title { font-family: 'Lexend', sans-serif; font-size: 20px; font-weight: 700; color: #1a1a1a; margin: 0; }
+.tf-close-btn { background: none; border: none; cursor: pointer; color: #999; display: flex; transition: color 0.2s; }
+.tf-close-btn:hover { color: #dc0032; }
+
+.tf-formula-group { margin-bottom: 24px; }
+.tf-formula-desc { font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 700; color: #1a1a1a; margin-bottom: 8px; }
+.tf-formula-block {
+  background-color: #f4f4f5; padding: 16px; border-radius: 8px;
+  font-family: 'Courier New', monospace; font-size: 13px; line-height: 1.6;
+  color: #dc0032; border: 1px solid #eaeaea;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* Utility Classes (Replacing ALL inline styles) */
+.tf-back-link { margin-bottom: 24px; display: inline-flex; }
+.tf-mb-0 { margin-bottom: 0; }
+.tf-mb-4 { margin-bottom: 4px; }
+.tf-mb-8 { margin-bottom: 8px; }
+.tf-w-100 { width: 100%; }
+
+.text-red { color: #dc0032; }
+.text-green { color: #1e8e3e; }
+.text-purple { color: #9333ea; }
+.text-white { color: #ffffff; }
