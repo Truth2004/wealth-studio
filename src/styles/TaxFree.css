@@ -521,7 +521,21 @@
 }
 
 /* Utility Classes (Replacing ALL inline styles) */
-.tf-back-link { margin-bottom: 24px; display: inline-flex; }
+.tf-back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: #666;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 24px;
+  transition: color 0.2s ease;
+}
+
+.tf-back-link:hover {
+  color: #dc0032; 
+}
 .tf-mb-0 { margin-bottom: 0; }
 .tf-mb-4 { margin-bottom: 4px; }
 .tf-mb-8 { margin-bottom: 8px; }

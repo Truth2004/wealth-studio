@@ -578,8 +578,19 @@
 
 /* --- DYNAMIC THEME & UTILITY CLASSES --- */
 .rvb-back-link {
-  margin-bottom: 24px;
   display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: #666;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 24px;
+  transition: color 0.2s ease;
+}
+
+.rvb-back-link:hover {
+  color: #dc0032; 
 }
 
 .rvb-mb-0 { margin-bottom: 0; }

@@ -4,7 +4,9 @@ import { FinancialProvider } from './context/FinancialContext';
 import LoginPage from './pages/LoginPage';
 import MoneySnapshot from './pages/MoneySnapshot';
 import StrategyTracks from './pages/StrategyTracks';
-import ActiveTrackView from './pages/ActiveTrackView'; 
+import DebtFreeStarter from './pages/DebtFreeStarter'; // <-- Imported new dedicated track
+import PropertySeeker from './pages/PropertySeeker';
+import GlobalWealthBuilder from './pages/GlobalWealthBuilder';
 import SimulationLab from './pages/SimulationLab';
 import CarVsInvestModule from './pages/CarVsInvestModule';
 import RentVsBuyModule from './pages/RentVsBuyModule';
@@ -53,14 +55,19 @@ function App() {
 
           <Route element={<MainLayout />}>
             <Route path="/money-snapshot" element={<MoneySnapshot />} />
+            
+            {/* Strategy Tracks Routes */}
             <Route path="/strategy-tracks" element={<StrategyTracks />} />
-            <Route path="/strategy-tracks/:trackId" element={<ActiveTrackView />} />
+            <Route path="/strategy-tracks/debt-free" element={<DebtFreeStarter />} /> {/* <-- Explicit standalone route */}
+            <Route path="/strategy-tracks/property-seeker" element={<PropertySeeker />} />
+            <Route path="/strategy-tracks/global-investor" element={<GlobalWealthBuilder />} />
+            {/* Simulation Lab Routes */}
             <Route path="/simulation-lab" element={<SimulationLab />} />
             <Route path="/simulation-lab/car-vs-invest" element={<CarVsInvestModule />} />
             <Route path="/simulation-lab/rent-vs-buy" element={<RentVsBuyModule />} />
             <Route path="/simulation-lab/tax-free-booster" element={<TaxFreeBoosterModule />} />
-            <Route path="/support" element={<Support />} />
             
+            <Route path="/support" element={<Support />} />
           </Route>
         </Routes>
       </BrowserRouter>

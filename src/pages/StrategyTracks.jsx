@@ -38,7 +38,7 @@ const StrategyTracks = () => {
       avoids: [
         'Moving cash into risky, locked-in investments'
       ],
-      isActive: false
+      isActive: true
     },
     {
       id: 'global-investor',
@@ -52,7 +52,7 @@ const StrategyTracks = () => {
       avoids: [
         <>Buying property or taking on <Explainer term="bond debt" explanation="Also known as a mortgage. This is a massive, long-term loan (usually 20-30 years) provided by a bank specifically to purchase real estate." /></>
       ],
-      isActive: false
+      isActive: true
     }
   ];
 
