@@ -80,7 +80,7 @@
 }
 
 /* Card Basics */
-.control-card, .verdict-card {
+.control-card {
   background-color: #ffffff;
   padding: 32px;
   border-radius: 12px;
@@ -216,25 +216,48 @@
   line-height: 1.4;
 }
 
-/* Verdict Card */
-.verdict-title {
+/* --- COHESIVE VERDICT STYLING --- */
+.verdict-card {
+  background-color: #ffffff;
+  border-radius: 16px;
+  padding: 32px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+}
+
+.verdict-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: 20px;
   font-size: 10px;
   font-weight: 700;
-  color: #1a1a1a;
   text-transform: uppercase;
-  letter-spacing: 1px;
-  margin-bottom: 16px;
+  letter-spacing: 0.5px;
+  margin-bottom: 24px;
+  background-color: #fff9e6;
+  color: #d4af37;
 }
 
-.verdict-text {
-  font-size: 14px;
+.verdict-title {
+  font-family: 'Lexend', sans-serif;
+  font-size: 24px;
+  color: #1a1a1a;
+  margin: 0 0 8px 0;
+}
+
+.verdict-amount {
+  font-family: 'Lexend', sans-serif;
+  font-size: 32px;
+  font-weight: 700;
+  margin: 0 0 24px 0;
+}
+
+.verdict-text-p {
+  font-size: 13px;
   color: #666;
   line-height: 1.6;
-}
-
-.verdict-highlight {
-  color: #1a1a1a;
-  font-weight: 600;
+  margin: 0;
 }
 
 /* Chart Details */
@@ -347,6 +370,691 @@
    RENT VS BUY EQUILIBRIUM SPECIFICS
 ========================================= */
 
+.rvb-page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 40px;
+}
+
+.rvb-subtitle {
+  color: #dc0032;
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.rvb-title {
+  font-family: 'Lexend', sans-serif;
+  font-size: 42px;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin: 0 0 12px 0;
+  line-height: 1.1;
+}
+
+.rvb-desc {
+  max-width: 500px;
+  font-size: 14px;
+  color: #666;
+  line-height: 1.6;
+}
+
+.rvb-market-status {
+  background-color: #fbf5ff;
+  padding: 16px 24px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.rvb-market-icon {
+  color: #9333ea;
+}
+
+.rvb-market-label {
+  font-size: 10px;
+  font-weight: 700;
+  color: #666;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.rvb-market-value {
+  font-size: 14px;
+  font-weight: 700;
+  color: #1a1a1a;
+}
+
+/* --- GRID LAYOUT --- */
+.rvb-main-grid {
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  gap: 32px;
+}
+
+.rvb-col-left {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.rvb-col-right {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* --- SCENARIO INPUTS CARD --- */
+.rvb-inputs-card {
+  background-color: #fcfaf9;
+  border-radius: 16px;
+  padding: 32px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+}
+
+.rvb-inputs-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-family: 'Lexend', sans-serif;
+  font-size: 18px;
+  color: #1a1a1a;
+  margin-bottom: 32px;
+}
+
+.rvb-slider-group {
+  margin-bottom: 32px;
+}
+
+.rvb-slider-labels {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.rvb-slider-title {
+  font-size: 10px;
+  font-weight: 700;
+  color: #666;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.rvb-slider-val {
+  font-family: 'Lexend', sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  color: #1a1a1a;
+}
+
+/* Custom wireframe slider with Red Square Knobs */
+.rvb-range-input {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 2px;
+  background: #eaeaea;
+  outline: none;
+  position: relative;
+}
+
+.rvb-range-input::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 2px;
+  background: #dc0032;
+  cursor: pointer;
+  border: none;
+  transition: transform 0.1s;
+}
+
+.rvb-range-input::-webkit-slider-thumb:hover {
+  transform: scale(1.1);
+}
+
+.rvb-range-input::-moz-range-thumb {
+  width: 16px;
+  height: 16px;
+  border-radius: 2px;
+  background: #dc0032;
+  cursor: pointer;
+  border: none;
+  transition: transform 0.1s;
+}
+
+.rvb-range-input::-moz-range-thumb:hover {
+  transform: scale(1.1);
+}
+
+/* Time Horizon Pills */
+.rvb-pills {
+  display: flex;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.rvb-pill {
+  flex: 1;
+  padding: 10px 0;
+  background-color: #eaeaea;
+  color: #666;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 700;
+  text-align: center;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.rvb-pill.active {
+  background-color: #dc0032;
+  color: #fff;
+}
+
+/* --- ADVISOR CARD (UPDATED TO RED) --- */
+.rvb-advisor-card {
+  background-color: #dc0032;
+  border-radius: 16px;
+  padding: 32px;
+  color: white;
+}
+
+.rvb-advisor-profile {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.rvb-advisor-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: 2px solid #ffffff; /* White contrast border */
+  object-fit: cover;
+}
+
+.rvb-advisor-role {
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.7);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 4px;
+}
+
+.rvb-advisor-name {
+  font-family: 'Lexend', sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  margin: 0;
+}
+
+.rvb-advisor-quote {
+  font-size: 13px;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.9);
+  margin-bottom: 24px;
+}
+
+.rvb-advisor-quote span {
+  color: #ffffff;
+  font-weight: 700;
+}
+
+.rvb-btn-primary {
+  width: 100%;
+  background-color: #ffffff;
+  color: #dc0032;
+  border: none;
+  padding: 16px;
+  border-radius: 8px;
+  font-family: 'Lexend', sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  transition: background-color 0.2s;
+}
+
+.rvb-btn-primary:hover {
+  background-color: #f4f4f5;
+}
+
+/* --- MAIN VERDICT CARD --- */
+.rvb-verdict-card {
+  background-color: #ffffff;
+  border-radius: 16px;
+  padding: 48px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.rvb-verdict-left {
+  max-width: 360px;
+}
+
+.rvb-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 24px;
+}
+
+.rvb-verdict-title {
+  font-family: 'Lexend', sans-serif;
+  font-size: 32px;
+  color: #1a1a1a;
+  margin: 0 0 8px 0;
+}
+
+.rvb-verdict-amount {
+  font-family: 'Lexend', sans-serif;
+  font-size: 36px;
+  font-weight: 700;
+  margin: 0 0 24px 0;
+}
+
+.rvb-verdict-text {
+  font-size: 13px;
+  color: #666;
+  line-height: 1.6;
+  margin-bottom: 40px;
+}
+
+.rvb-stats-row {
+  display: flex;
+  gap: 16px;
+}
+
+.rvb-stat-box {
+  background-color: #f9f9f9;
+  padding: 16px 24px;
+  border-radius: 12px;
+  flex: 1;
+}
+
+.rvb-stat-box-label {
+  font-size: 10px;
+  font-weight: 700;
+  color: #999;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.rvb-stat-box-val {
+  font-family: 'Lexend', sans-serif;
+  font-size: 20px;
+  font-weight: 700;
+  color: #1a1a1a;
+}
+
+/* Doughnut area */
+.rvb-chart-wrapper {
+  position: relative;
+  width: 240px;
+  height: 240px;
+}
+
+.rvb-chart-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+.rvb-chart-center-label {
+  font-size: 10px;
+  font-weight: 700;
+  color: #999;
+  text-transform: uppercase;
+}
+
+.rvb-chart-center-val {
+  font-family: 'Lexend', sans-serif;
+  font-size: 36px;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin: 4px 0;
+}
+
+.rvb-chart-center-sub {
+  font-size: 10px;
+  font-weight: 700;
+}
+
+/* --- BOTTOM SPLIT CARDS --- */
+.rvb-split-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+
+.rvb-sub-card {
+  background-color: #fcfaf9;
+  border-radius: 16px;
+  padding: 32px;
+}
+
+.rvb-sub-title {
+  font-family: 'Lexend', sans-serif;
+  font-size: 16px;
+  color: #1a1a1a;
+  margin: 0 0 32px 0;
+}
+
+/* Asset Dynamics Bars */
+.rvb-bar-container {
+  margin-bottom: 32px;
+}
+
+.rvb-bar-top {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  font-weight: 700;
+  color: #666;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.rvb-bar-top .green { color: #1e8e3e; }
+
+.rvb-thick-bar {
+  width: 100%;
+  height: 48px; 
+  background-color: #eaeaea;
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 8px;
+}
+
+/* Coral Sunk Cost Gradient */
+.rvb-fill-sunk {
+  height: 100%;
+  background: linear-gradient(90deg, #fca5a5 0%, #f87171 100%);
+  transition: width 0.3s ease;
+}
+
+.rvb-fill-green {
+  height: 100%;
+  background: linear-gradient(90deg, #10b981 0%, #34d399 100%);
+  transition: width 0.3s ease;
+}
+
+.rvb-bar-subtext {
+  font-size: 11px;
+  color: #999;
+}
+
+/* Net Worth Horizon Stacked Bar Wrapper */
+.rvb-horizon-wrapper {
+  height: 180px;
+  width: 100%;
+  margin-bottom: 24px;
+}
+
+.rvb-horizon-footer {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  margin-top: 16px;
+  font-size: 11px;
+  color: #666;
+  line-height: 1.5;
+}
+
+.rvb-red-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  margin-top: 4px;
+  flex-shrink: 0;
+}
+
+/* --- FOOTER BANNER --- */
+.rvb-footer-banner {
+  background-color: #fbf5ff;
+  border-radius: 12px;
+  padding: 16px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.rvb-footer-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 12px;
+  color: #6b21a8;
+}
+
+.rvb-footer-link {
+  font-size: 11px;
+  font-weight: 700;
+  color: #9333ea;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+}
+
+/* --- FORMULAS MODAL (CLEAN PORTAL VERSION) --- */
+.rvb-modal-overlay {
+  position: fixed;
+  top: 0; 
+  left: 0; 
+  right: 0; 
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.75);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999; 
+  backdrop-filter: blur(4px); 
+  animation: fadeIn 0.2s ease-out forwards;
+}
+
+.rvb-modal-content {
+  background-color: #ffffff;
+  padding: 32px;
+  border-radius: 16px;
+  max-width: 550px;
+  width: 90%;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+  position: relative;
+  text-align: left;
+}
+
+.rvb-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+  border-bottom: 1px solid #eaeaea;
+  padding-bottom: 16px;
+}
+
+.rvb-modal-title {
+  font-family: 'Lexend', sans-serif;
+  font-size: 20px;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin: 0;
+}
+
+.rvb-close-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #999;
+  transition: color 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.rvb-close-btn:hover {
+  color: #dc0032;
+}
+
+.rvb-formula-group {
+  margin-bottom: 24px;
+}
+
+.rvb-formula-desc {
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin-bottom: 8px;
+}
+
+.rvb-formula-block {
+  background-color: #f4f4f5;
+  padding: 16px;
+  border-radius: 8px;
+  font-family: 'Courier New', monospace;
+  font-size: 13px;
+  line-height: 1.6;
+  color: #dc0032;
+  border: 1px solid #eaeaea;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* --- DYNAMIC THEME & UTILITY CLASSES --- */
+.rvb-back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: #666;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 24px;
+  transition: color 0.2s ease;
+}
+
+.rvb-back-link:hover {
+  color: #dc0032; 
+}
+
+.rvb-mb-0 { margin-bottom: 0; }
+.rvb-mb-4 { margin-bottom: 4px; }
+.rvb-m-0 { margin: 0; }
+
+.text-red { color: #dc0032; }
+.text-purple { color: #6b21a8; }
+
+/* Dynamic Win/Loss Colors */
+.rvb-badge.buy-wins {
+  background-color: #e6f4ea;
+  color: #1e8e3e;
+}
+.rvb-badge.rent-wins {
+  background-color: #f3e8ff;
+  color: #9333ea;
+}
+
+.rvb-verdict-amount.buy-wins,
+.rvb-gain-value.buy-wins {
+  color: #1e8e3e;
+}
+.rvb-verdict-amount.rent-wins,
+.rvb-gain-value.rent-wins {
+  color: #9333ea;
+}
+
+.rvb-red-dot.buy-wins { background-color: #1e8e3e; }
+.rvb-red-dot.rent-wins { background-color: #9333ea; }
+
+/* NEW Clean Key Impact Box */
+.rvb-verdict-text-p {
+  margin-bottom: 24px;
+}
+
+.rvb-impact-box {
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 12px;
+  border: 1px solid #eaeaea;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+}
+
+.rvb-impact-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #eaeaea;
+}
+
+.rvb-impact-title {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #1a1a1a;
+  letter-spacing: 0.5px;
+  margin: 0;
+}
+
+.rvb-impact-list {
+  margin: 0;
+  padding-left: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  color: #666;
+  font-size: 12px;
+}
+
+/* Net Worth Horizon Header Layout */
+.rvb-gain-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 16px;
+}
+
+.rvb-gain-right {
+  text-align: right;
+}
+
+.rvb-gain-label {
+  font-size: 10px;
+  font-weight: 700;
+  color: #666;
+  text-transform: uppercase;
+}
+
+.rvb-gain-value {
+  font-size: 14px;
+  font-weight: 700;
+}
+
 .rvb-grid {
   display: grid;
   grid-template-columns: 320px 1fr;
@@ -362,7 +1070,7 @@
 
 /* Custom Sliders for RVB */
 .rvb-input-card {
-  background-color: #fcfaf9; /* Slight off-white to match screenshot */
+  background-color: #fcfaf9; 
   padding: 32px;
   border-radius: 16px;
   border: 1px solid #eaeaea;
@@ -420,7 +1128,7 @@
   width: 16px;
   height: 16px;
   border-radius: 50%;
-  background: #dc0032; /* ABSA Red */
+  background: #dc0032; 
   cursor: pointer;
   transition: transform 0.1s;
 }
@@ -739,4 +1447,21 @@
   font-size: 18px;
   color: #1a1a1a;
   margin-bottom: 32px;
+}
+
+/* --- VERDICT AFFORDABILITY ADDITIONS --- */
+.verdict-divider {
+  height: 1px;
+  background-color: #eaeaea;
+  margin: 20px 0;
+}
+
+.text-green {
+  color: #2e7d32;
+  font-weight: 600;
+}
+
+.text-red {
+  color: #dc0032;
+  font-weight: 600;
 }

@@ -1,15 +1,18 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { FlaskConical, ArrowLeft, Info, SlidersHorizontal } from 'lucide-react';
+import { FlaskConical, ArrowLeft, Info, SlidersHorizontal, CheckCircle2 } from 'lucide-react';
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from 'chart.js';
 import { Bar } from 'react-chartjs-2';
 import TopBar from '../components/TopBar';
 import Explainer from '../components/Explainer';
+import { useFinancials } from '../context/FinancialContext'; // Connected to global snapshot
 import '../styles/SimulationModule.css';
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
 const CarVsInvestModule = () => {
+  const { financials } = useFinancials();
+  
   const [carPrice, setCarPrice] = useState(300000);
   const [loanTerm, setLoanTerm] = useState(72);
 
@@ -21,6 +24,14 @@ const CarVsInvestModule = () => {
 
   const monthlyInterestRate = interestRate / 12;
   const monthlyPayment = (carPrice * monthlyInterestRate) / (1 - Math.pow(1 + monthlyInterestRate, -loanTerm));
+
+  // --- Affordability Math (Based on Money Snapshot) ---
+  const netIncome = financials.netIncome || 0;
+  const totalFixedCosts = (financials.housingCosts || 0) + (financials.mobilityCosts || 0) + (financials.lifestyleCosts || 0);
+  const currentDebt = financials.monthlyDebt || 0;
+  
+  const disposableIncome = Math.max(0, netIncome - totalFixedCosts - currentDebt);
+  const isAffordable = netIncome > 0 && monthlyPayment <= disposableIncome;
 
   const labels = ['YR 1', 'YR 2', 'YR 3', 'YR 4', 'YR 5'];
   const carValues = [];
@@ -44,7 +55,6 @@ const CarVsInvestModule = () => {
   const finalInvestValue = investValues[4];
   const opportunityCost = finalInvestValue - finalCarValue;
 
-
   const dynamicNotifications = [];
   
   if (carPrice >= 1000000) {
@@ -63,6 +73,12 @@ const CarVsInvestModule = () => {
     dynamicNotifications.push({
       title: 'High Opportunity Cost',
       message: `You are sacrificing over R ${formatZAR(500000)} in potential compounding wealth.`
+    });
+  }
+  if (netIncome > 0 && !isAffordable) {
+    dynamicNotifications.push({
+      title: 'Budget Deficit Detected',
+      message: 'This vehicle installment exceeds your available disposable income calculated in your Money Snapshot.'
     });
   }
 
@@ -141,7 +157,6 @@ const CarVsInvestModule = () => {
           <div className="controls-column">
             <div className="control-card">
               
-              {/* NEW SCENARIO INPUTS HEADER */}
               <div className="module-inputs-header">
                 <SlidersHorizontal size={20} color="#dc0032" />
                 Scenario Inputs
@@ -194,12 +209,34 @@ const CarVsInvestModule = () => {
             </div>
 
             <div className="verdict-card">
-              <div className="verdict-title">Studio Verdict</div>
-              <p className="verdict-text">
-                By purchasing the R {formatZAR(carPrice)} vehicle, you are committing to a monthly payment of <span className="verdict-highlight">R {formatZAR(monthlyPayment)}</span>. 
+              <div className="verdict-badge">
+                <CheckCircle2 size={14} /> Studio Verdict
+              </div>
+              <h2 className="verdict-title">The Opportunity Cost:</h2>
+              <h2 className="verdict-amount text-gold">
+                + R {formatZAR(opportunityCost)}
+              </h2>
+              
+              <p className="verdict-text-p">
+                By purchasing the R {formatZAR(carPrice)} vehicle, you are committing to a monthly payment of <strong>R {formatZAR(monthlyPayment)}</strong>. 
                 <br/><br/>
-                If you instead invested that identical monthly amount into an <Explainer term="index fund" explanation="A low-cost investment portfolio that tracks a broad market index, like the JSE Top 40 or the S&P 500, offering instant diversification." /> returning 10%, you would possess <span className="verdict-highlight">R {formatZAR(opportunityCost)}</span> more in total wealth after 5 years.
+                If you instead invested that identical monthly amount into an <Explainer term="index fund" explanation="A low-cost investment portfolio that tracks a broad market index, like the JSE Top 40 or the S&P 500, offering instant diversification." /> returning 10%, you would possess <strong>R {formatZAR(opportunityCost)}</strong> more in total wealth after 5 years.
               </p>
+
+              {/* DYNAMIC AFFORDABILITY INJECTION */}
+              {netIncome > 0 && (
+                <>
+                  <div className="verdict-divider"></div>
+                  <p className="verdict-text-p">
+                    <strong>Snapshot Affordability:</strong> Your current disposable income is <strong>R {formatZAR(disposableIncome)}</strong>. 
+                    {isAffordable ? (
+                      <span className="text-green"> This vehicle installment fits within your monthly budget.</span>
+                    ) : (
+                      <span className="text-red"> This vehicle installment exceeds your available free cashflow.</span>
+                    )}
+                  </p>
+                </>
+              )}
             </div>
           </div>
 

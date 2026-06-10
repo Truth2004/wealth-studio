@@ -12,20 +12,21 @@ const StrategyTracks = () => {
   // === DYNAMIC RECOMMENDATION ENGINE ===
   const determineRecommendedTrack = () => {
     const totalDebt = financials.totalDebt || 0;
+    const monthlyDebt = financials.monthlyDebt || 0;
     const netIncome = financials.netIncome || 0;
-    const currentSavings = financials.currentSavings || 0;
+    const targetHomePrice = financials.targetHomePrice || 0;
 
-    // Rule 1: If they have significant debt (> R15,000), they MUST clear it first
-    if (totalDebt > 15000) {
+    // Rule 1: High Debt Friction. If total debt is high, or monthly minimums eat > 15% of net income.
+    if (totalDebt > 15000 || (netIncome > 0 && monthlyDebt > (netIncome * 0.15))) {
       return 'debt-free';
     } 
-    // Rule 2: If they have high income & good savings, push global investing
-    else if (netIncome >= 60000 && currentSavings >= 150000) {
-      return 'global-investor';
-    } 
-    // Rule 3: Default middle-ground (Stable, low debt, looking to build assets)
-    else {
+    // Rule 2: Explicit Goal. If they specifically entered a Target Home Price in the snapshot.
+    else if (targetHomePrice > 0) {
       return 'property-seeker';
+    } 
+    // Rule 3: Pure Velocity. Low/no debt, and no property goals -> push global equity.
+    else {
+      return 'global-investor';
     }
   };
 

@@ -266,7 +266,11 @@ const TaxFreeBoosterModule = () => {
 
             <div className="tf-advisor-card">
               <div className="tf-advisor-profile">
-                <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=150&q=80" alt="Advisor" className="tf-advisor-avatar" />
+                <img 
+  src="https://images.unsplash.com/photo-1531384441138-2736e62e0919?auto=format&fit=crop&w=150&q=80" 
+  alt="Advisor" 
+  className="tf-advisor-avatar" 
+/>
                 <div>
                   <div className="tf-advisor-role">Tax Strategist</div>
                   <h4 className="tf-advisor-name">Sipho Ndlovu</h4>
