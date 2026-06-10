@@ -1,0 +1,49 @@
+/* =========================================
+   BACK TO TOP BUTTON (MINIMALIST THEME)
+========================================= */
+
+.back-to-top {
+  position: fixed;
+  bottom: 40px;
+  right: 40px;
+  background-color: #dc0032;
+  color: #ffffff; /* Muted idle state */
+  border: 1px solid #eaeaea; /* Thin, structural border */
+  border-radius: 8px; /* Sleek circular design */
+  width: 48px;
+  height: 48px;
+  cursor: pointer;
+  z-index: 999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  /* Hidden State */
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(16px);
+  
+  /* Smooth, premium transition matching the rest of the site */
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03); /* Soft ambient shadow */
+}
+
+/* Visibility State Triggered by React */
+.back-to-top.back-to-top-visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+/* Minimalist Hover Interaction */
+.back-to-top:hover {
+  background-color: #f4f4f5; /* Standard tech-gray hover background */
+  color: #dc0032; /* Signature Red */
+  border-color: #dc0032;
+  transform: translateY(-4px); /* Gentle float effect */
+  box-shadow: 0 8px 16px rgba(220, 0, 50, 0.1); /* Subtle red ambient glow */
+}
+
+.back-to-top:active {
+  transform: translateY(0); /* Settles back down when clicked */
+}
