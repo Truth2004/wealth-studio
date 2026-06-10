@@ -729,3 +729,14 @@
   cursor: pointer;
   letter-spacing: 0.5px;
 }
+
+/* Custom Header for Scenario Inputs */
+.module-inputs-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-family: 'Lexend', sans-serif;
+  font-size: 18px;
+  color: #1a1a1a;
+  margin-bottom: 32px;
+}

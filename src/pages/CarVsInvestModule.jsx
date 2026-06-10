@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { FlaskConical, ArrowLeft, Info } from 'lucide-react';
+import { FlaskConical, ArrowLeft, Info, SlidersHorizontal } from 'lucide-react';
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from 'chart.js';
 import { Bar } from 'react-chartjs-2';
 import TopBar from '../components/TopBar';
@@ -140,6 +140,13 @@ const CarVsInvestModule = () => {
           
           <div className="controls-column">
             <div className="control-card">
+              
+              {/* NEW SCENARIO INPUTS HEADER */}
+              <div className="module-inputs-header">
+                <SlidersHorizontal size={20} color="#dc0032" />
+                Scenario Inputs
+              </div>
+
               <div className="control-group">
                 <div className="control-label-row">
                   <span className="control-label">Car Purchase Price</span>
