@@ -19,24 +19,24 @@ export const FinancialProvider = ({ children }) => {
       username: '',
       grossSalary: 0,
       
-      // Breakdown Categories
       housingCosts: 0,
       mobilityCosts: 0,
       lifestyleCosts: 0,
       
-      // Debt Tracking
       monthlyDebt: 0, 
       totalDebt: 0,   
       
       netIncome: 0,
       activeTrack: null,
       
-      // Advanced Goals / Current Balances
       currentSavings: 0,      
       currentRA: 0,           
       targetHomePrice: 0,     
-      currentTFSA: 0,        // New: Total accrued lifetime tax-free balance
-      liquidInvestments: 0,  // New: Non-retirement investment capital (ETFs/Brokerage)
+      currentTFSA: 0,        
+      liquidInvestments: 0,
+      
+      // NEW: Persists timeline checkbox toggles globally
+      completedMilestones: {}, 
     };
   });
 

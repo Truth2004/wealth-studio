@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Globe, ArrowLeft, Star, ArrowRight, Shield, CheckSquare, Square, TrendingDown, Compass, Landmark } from 'lucide-react';
 import confetti from 'canvas-confetti'; 
@@ -8,15 +7,16 @@ import Explainer from '../components/Explainer';
 import '../styles/GlobalWealthBuilder.css';
 
 const GlobalWealthBuilder = () => {
-  const { financials } = useFinancials();
-  const [manualChecks, setManualChecks] = useState({});
+  const { financials, updateFinancials } = useFinancials();
+
+  // Read persistent checks from the global context instead of local state
+  const manualChecks = financials.completedMilestones || {};
 
   const formatZAR = (amount) => amount.toLocaleString('en-ZA', { minimumFractionDigits: 0, maximumFractionDigits: 0 });
 
   // === DATA-DRIVEN MATH & PROJECTIONS ===
   const netIncome = financials.netIncome || 0;
   
-  // Aggregate the new refined breakdown categories
   const housing = financials.housingCosts || 0;
   const mobility = financials.mobilityCosts || 0;
   const lifestyle = financials.lifestyleCosts || 0;
@@ -25,17 +25,14 @@ const GlobalWealthBuilder = () => {
   const monthlyDebt = financials.monthlyDebt || 0; 
   const currentSavings = financials.currentSavings || 0;
 
-  // Calculate Aggressive Surplus Capital based on new breakdown metrics
   const currentDisposable = Math.max(0, netIncome - totalFixedCosts - monthlyDebt);
   const wealthAllocation = currentDisposable * 0.75; 
   
-  // Track Core Directives
   const tfsaMonthlyTarget = 3000; 
   const tfsaProgressPercent = Math.min(100, Math.round((wealthAllocation / tfsaMonthlyTarget) * 100));
   
   const offshoreSurplus = Math.max(0, wealthAllocation - tfsaMonthlyTarget);
 
-  // 5-Year Compound Interest Projection (11% Compound rate for Global Equities)
   const monthlyRate = 0.11 / 12;
   const totalMonths = 60;
   let projectedPortfolio = currentSavings;
@@ -53,6 +50,7 @@ const GlobalWealthBuilder = () => {
   };
 
   const toggleMilestone = (id) => {
+    const milestoneKey = `gwb_${id}`; // Unique ID so tracks don't clash
     const alreadyDone = isMilestoneCompleted(id);
 
     if (!alreadyDone) {
@@ -64,13 +62,16 @@ const GlobalWealthBuilder = () => {
       });
     }
 
-    setManualChecks(prev => ({
-      ...prev,
-      [id]: !prev[id]
-    }));
+    // Update global context, triggering a save to localStorage
+    updateFinancials({
+      completedMilestones: {
+        ...manualChecks,
+        [milestoneKey]: !manualChecks[milestoneKey]
+      }
+    });
   };
 
-  const isMilestoneCompleted = (id) => autoCompleted[id] || manualChecks[id];
+  const isMilestoneCompleted = (id) => autoCompleted[id] || manualChecks[`gwb_${id}`];
 
   // ==========================================
   // TIMELINE DATA
@@ -157,7 +158,6 @@ const GlobalWealthBuilder = () => {
     }
   ];
 
-  // Map raw data into layout logic
   let foundActive = false;
   const processedMilestones = rawMilestones.map(milestone => {
     const isCompleted = isMilestoneCompleted(milestone.id);
@@ -173,11 +173,9 @@ const GlobalWealthBuilder = () => {
     return { ...milestone, isCompleted, status: derivedStatus };
   });
 
-  // Calculate Overall Progress
   const completedCount = processedMilestones.filter(m => m.isCompleted).length;
   const overallProgressPercent = Math.round((completedCount / rawMilestones.length) * 100);
 
-  // === DYNAMIC NOTIFICATION LOGIC ===
   const dynamicNotifications = [];
   if (monthlyDebt > 0) {
     dynamicNotifications.push({
@@ -192,9 +190,6 @@ const GlobalWealthBuilder = () => {
     });
   }
 
-  // ==========================================
-  // ABSA SUGGESTIONS DATA (Added to fix the 500 error)
-  // ==========================================
   const absaSuggestions = [
     {
       id: 1,
@@ -270,7 +265,6 @@ const GlobalWealthBuilder = () => {
 
           {/* COLUMN 2: THE TIMELINE */}
           <div>
-            {/* MASTER PROGRESS BAR */}
             <div className="track-overall-progress">
               <div className="track-progress-header">
                 <h4 className="track-progress-title">Track Progression</h4>

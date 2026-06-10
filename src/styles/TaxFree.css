@@ -1,7 +1,3 @@
-/* =========================================
-   TAX-FREE BOOSTER SPECIFICS (MATCHED THEME)
-========================================= */
-
 .tf-page-header {
   display: flex;
   justify-content: space-between;
@@ -34,7 +30,7 @@
   line-height: 1.6;
 }
 
-/* Matched the Light Purple / Dark Purple Icon from RVB */
+
 .tf-market-status {
   background-color: #fbf5ff;
   padding: 16px 24px;
@@ -62,7 +58,7 @@
   color: #1a1a1a;
 }
 
-/* --- GRID LAYOUT --- */
+/* GRID LAYOU */
 .tf-main-grid {
   display: grid;
   grid-template-columns: 320px 1fr;
@@ -125,7 +121,7 @@
   color: #1a1a1a;
 }
 
-/* Custom slider with Matched Red Square Knobs */
+/* Custom slider with square knobs */
 .tf-range-input {
   -webkit-appearance: none;
   width: 100%;
@@ -191,7 +187,7 @@
   color: #fff;
 }
 
-/* --- ADVISOR CARD (RED) --- */
+/*ADVISOR CARD*/
 .tf-advisor-card {
   background-color: #dc0032;
   border-radius: 16px;
@@ -255,7 +251,7 @@
 }
 .tf-btn-primary:hover { background-color: #f4f4f5; }
 
-/* --- MAIN VERDICT CARD --- */
+/*MAIN VERDICT CARD*/
 .tf-verdict-card {
   background-color: #ffffff;
   border-radius: 16px;
@@ -385,7 +381,7 @@
   border-top: 2px dashed #9333ea;
 }
 
-/* --- BOTTOM SPLIT CARDS --- */
+/*BOTTOM SPLIT CARDS */
 .tf-split-row {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -456,7 +452,7 @@
   font-weight: 700;
 }
 
-/* --- FOOTER & MODAL --- */
+/*FOOTER & MODAL */
 .tf-footer-banner {
   background-color: #fbf5ff;
   border-radius: 12px;

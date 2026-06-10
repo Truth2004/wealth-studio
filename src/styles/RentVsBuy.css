@@ -1,7 +1,3 @@
-/* =========================================
-   RENT VS BUY EQUILIBRIUM SPECIFICS
-========================================= */
-
 .rvb-page-header {
   display: flex;
   justify-content: space-between;
@@ -61,7 +57,7 @@
   color: #1a1a1a;
 }
 
-/* --- GRID LAYOUT --- */
+/* GRID LAYOUT */
 .rvb-main-grid {
   display: grid;
   grid-template-columns: 320px 1fr;
@@ -80,7 +76,7 @@
   gap: 24px;
 }
 
-/* --- SCENARIO INPUTS CARD --- */
+/* SCENARIO INPUTS CARD */
 .rvb-inputs-card {
   background-color: #fcfaf9;
   border-radius: 16px;
@@ -190,7 +186,7 @@
   color: #fff;
 }
 
-/* --- ADVISOR CARD (UPDATED TO RED) --- */
+/*ADVISOR CARD */
 .rvb-advisor-card {
   background-color: #dc0032;
   border-radius: 16px;
@@ -262,7 +258,7 @@
   background-color: #f4f4f5;
 }
 
-/* --- MAIN VERDICT CARD --- */
+/* MAIN VERDICT CARD*/
 .rvb-verdict-card {
   background-color: #ffffff;
   border-radius: 16px;
@@ -373,7 +369,7 @@
   font-weight: 700;
 }
 
-/* --- BOTTOM SPLIT CARDS --- */
+/* BOTTOM SPLIT CARDS */
 .rvb-split-row {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -462,7 +458,7 @@
   flex-shrink: 0;
 }
 
-/* --- FOOTER BANNER --- */
+/* FOOTER BANNER */
 .rvb-footer-banner {
   background-color: #fbf5ff;
   border-radius: 12px;
@@ -489,7 +485,7 @@
   cursor: pointer;
 }
 
-/* --- FORMULAS MODAL (CLEAN PORTAL VERSION) --- */
+/* FORMULAS MODAL (CLEAN PORTAL VERSION) */
 .rvb-modal-overlay {
   position: fixed;
   top: 0; 

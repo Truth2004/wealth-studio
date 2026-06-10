@@ -1,15 +1,11 @@
-/* =========================================
-   BACK TO TOP BUTTON (MINIMALIST THEME)
-========================================= */
-
 .back-to-top {
   position: fixed;
   bottom: 40px;
   right: 40px;
   background-color: #dc0032;
-  color: #ffffff; /* Muted idle state */
-  border: 1px solid #eaeaea; /* Thin, structural border */
-  border-radius: 8px; /* Sleek circular design */
+  color: #ffffff; 
+  border: 1px solid #eaeaea; 
+  border-radius: 8px; 
   width: 48px;
   height: 48px;
   cursor: pointer;

@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ShieldCheck, ArrowLeft, Star, ArrowRight, Shield, CheckSquare, Square, TrendingDown, Target } from 'lucide-react';
 import confetti from 'canvas-confetti'; 
@@ -8,15 +7,16 @@ import Explainer from '../components/Explainer';
 import '../styles/DebtFreeStarter.css'; 
 
 const DebtFreeStarter = () => {
-  const { financials } = useFinancials();
-  const [manualChecks, setManualChecks] = useState({});
+  const { financials, updateFinancials } = useFinancials();
+
+  // Read persistent checks from the global context
+  const manualChecks = financials.completedMilestones || {};
 
   const formatZAR = (amount) => amount.toLocaleString('en-ZA', { minimumFractionDigits: 0, maximumFractionDigits: 0 });
 
   // === DATA-DRIVEN MATH & PROJECTIONS ===
   const netIncome = financials.netIncome || 0;
   
-  // Aggregate the new breakdown categories
   const housing = financials.housingCosts || 0;
   const mobility = financials.mobilityCosts || 0;
   const lifestyle = financials.lifestyleCosts || 0;
@@ -24,7 +24,6 @@ const DebtFreeStarter = () => {
   
   const currentSavings = financials.currentSavings || 0;
   
-  // Directly targeting the new global totalDebt state
   const totalDebt = financials.totalDebt || 0; 
   const minDebtPayment = financials.monthlyDebt || 0;
   const currentDisposable = Math.max(0, netIncome - totalFixedCosts - minDebtPayment);
@@ -53,9 +52,10 @@ const DebtFreeStarter = () => {
     5: false  
   };
 
-  const isMilestoneCompleted = (id) => autoCompleted[id] || manualChecks[id];
+  const isMilestoneCompleted = (id) => autoCompleted[id] || manualChecks[`dfs_${id}`];
 
   const toggleMilestone = (id) => {
+    const milestoneKey = `dfs_${id}`;
     const alreadyDone = isMilestoneCompleted(id);
 
     if (!alreadyDone) {
@@ -67,10 +67,13 @@ const DebtFreeStarter = () => {
       });
     }
 
-    setManualChecks(prev => ({
-      ...prev,
-      [id]: !prev[id]
-    }));
+    // Update global context, triggering a save to localStorage
+    updateFinancials({
+      completedMilestones: {
+        ...manualChecks,
+        [milestoneKey]: !manualChecks[milestoneKey]
+      }
+    });
   };
 
   // ==========================================
@@ -169,7 +172,6 @@ const DebtFreeStarter = () => {
     }
   ];
 
-  // Map raw data into layout logic
   let foundActive = false;
   const processedMilestones = rawMilestones.map(milestone => {
     const isCompleted = isMilestoneCompleted(milestone.id);
@@ -185,11 +187,9 @@ const DebtFreeStarter = () => {
     return { ...milestone, isCompleted, status: derivedStatus };
   });
 
-  // Calculate Overall Progress
   const completedCount = processedMilestones.filter(m => m.isCompleted).length;
   const overallProgressPercent = Math.round((completedCount / rawMilestones.length) * 100);
 
-  // === DYNAMIC NOTIFICATION LOGIC ===
   const dynamicNotifications = [];
   if (netIncome > 0 && (minDebtPayment / netIncome) > 0.3) {
     dynamicNotifications.push({
@@ -204,9 +204,6 @@ const DebtFreeStarter = () => {
     });
   }
 
-  // ==========================================
-  // ABSA SUGGESTIONS DATA
-  // ==========================================
   const absaSuggestions = [
     {
       id: 1,
@@ -237,7 +234,6 @@ const DebtFreeStarter = () => {
           <ArrowLeft size={16} /> Back to Strategy Tracks
         </Link>
 
-        {/* HEADER */}
         <div className="strategy-header-container">
           <div>
             <h1 className="strategy-title">
@@ -249,10 +245,8 @@ const DebtFreeStarter = () => {
           </div>
         </div>
 
-        {/* 3-COLUMN LAYOUT */}
         <div className="layout-split">
           
-          {/* COLUMN 1: FINANCIAL IMPACT SUMMARY */}
           <div className="track-summary">
             <div className="summary-card">
               <h3 className="summary-title">Financial Impact</h3>
@@ -280,9 +274,7 @@ const DebtFreeStarter = () => {
             </div>
           </div>
 
-          {/* COLUMN 2: THE TIMELINE */}
           <div>
-            {/* MASTER PROGRESS BAR */}
             <div className="track-overall-progress">
               <div className="track-progress-header">
                 <h4 className="track-progress-title">Track Progression</h4>
@@ -323,7 +315,6 @@ const DebtFreeStarter = () => {
             </div>
           </div>
 
-          {/* COLUMN 3: SIDEBAR */}
           <div className="suggestions-sidebar">
             <div className="suggestions-header">
               <Star size={20} className="icon-dark-fill" /> 

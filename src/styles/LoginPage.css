@@ -50,7 +50,7 @@
 .login-input {
   padding: 12px 16px;
   border-radius: 0;
-  border: 1px solid #1a1a1a; /* Stark borders matching the card */
+  border: 1px solid #1a1a1a; 
   font-family: 'Inter', sans-serif;
   font-size: 15px;
   color: #1a1a1a;
@@ -87,9 +87,9 @@
 
 .login-button:hover {
   background-color: white; 
-  color: #dc0032; /* Inverts the button on hover for a high-contrast interaction */
+  color: #dc0032; 
 }
 
 .login-button:active {
-  transform: translate(2px, 2px); /* Physical "pushing down" effect */
+  transform: translate(2px, 2px);
 }

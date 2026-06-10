@@ -1,7 +1,3 @@
-/* =========================================
-   DEBT FREE STARTER SPECIFICS
-========================================= */
-
 .track-view-header {
   margin-bottom: 40px;
 }
@@ -132,7 +128,7 @@
   margin: 24px 0;
 }
 
-/* --- NATIVE HTML5 PROGRESS BARS --- */
+/* NATIVE HTML5 PROGRESS BARS */
 progress.dfs-main-progress {
   -webkit-appearance: none;
   appearance: none;
@@ -226,7 +222,7 @@ progress.dfs-step-progress::-moz-progress-bar {
   color: #dc0032;
 }
 
-/* --- TIMELINE STYLES --- */
+/*  TIMELINE STYLES  */
 .timeline-container {
   flex: 1;
   position: relative;

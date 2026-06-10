@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Home, ArrowLeft, Star, ArrowRight, Shield, CheckSquare, Square, FileText } from 'lucide-react';
 import confetti from 'canvas-confetti'; 
@@ -8,8 +7,11 @@ import Explainer from '../components/Explainer';
 import '../styles/PropertySeeker.css';
 
 const PropertySeeker = () => {
-  const { financials } = useFinancials();
-  const [manualChecks, setManualChecks] = useState({});
+  // Pull in both the data and the update function from global context
+  const { financials, updateFinancials } = useFinancials();
+  
+  // Read persistent checks from the global context instead of local state
+  const manualChecks = financials.completedMilestones || {};
 
   const formatZAR = (amount) => amount.toLocaleString('en-ZA', { minimumFractionDigits: 0, maximumFractionDigits: 0 });
 
@@ -62,9 +64,11 @@ const PropertySeeker = () => {
     5: false  
   };
 
-  const isMilestoneCompleted = (id) => autoCompleted[id] || manualChecks[id];
+  // Check against the global 'ps_' prefix
+  const isMilestoneCompleted = (id) => autoCompleted[id] || manualChecks[`ps_${id}`];
 
   const toggleMilestone = (id) => {
+    const milestoneKey = `ps_${id}`; // Unique ID so tracks don't clash
     const alreadyDone = isMilestoneCompleted(id);
 
     if (!alreadyDone) {
@@ -76,10 +80,13 @@ const PropertySeeker = () => {
       });
     }
 
-    setManualChecks(prev => ({
-      ...prev,
-      [id]: !prev[id]
-    }));
+    // Update global context, triggering a save to localStorage
+    updateFinancials({
+      completedMilestones: {
+        ...manualChecks,
+        [milestoneKey]: !manualChecks[milestoneKey]
+      }
+    });
   };
 
   // ==========================================

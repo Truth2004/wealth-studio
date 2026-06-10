@@ -383,7 +383,7 @@ const TaxFreeBoosterModule = () => {
                 <Info size={16} />
                 Calculations strictly follow current South African Revenue Service (SARS) legislation.
               </div>
-              <div className="tf-footer-link" onClick={() => setShowFormulas(true)}>VIEW MATHEMATICS</div>
+              <div className="tf-footer-link" onClick={() => setShowFormulas(true)}>VIEW FORMULAS</div>
             </div>
 
           </div>

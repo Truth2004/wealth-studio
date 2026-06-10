@@ -1,7 +1,3 @@
-/* =========================================
-   PROPERTY SEEKER SPECIFICS
-========================================= */
-
 .track-view-header {
   margin-bottom: 40px;
 }
@@ -133,7 +129,7 @@
   margin: 24px 0;
 }
 
-/* --- NATIVE PROGRESS BAR INITIALIZATIONS --- */
+/* NATIVE PROGRESS BAR INITIALIZATIONS */
 progress.ps-main-progress {
   -webkit-appearance: none;
   appearance: none;
@@ -195,7 +191,7 @@ progress.ps-step-progress::-moz-progress-bar {
   background-color: #2e7d32; 
 }
 
-/* --- OVERALL PROGRESS SHEET PANEL --- */
+/* OVERALL PROGRESS SHEET PANEL */
 .track-overall-progress {
   background-color: #ffffff;
   padding: 24px;
@@ -228,7 +224,7 @@ progress.ps-step-progress::-moz-progress-bar {
   color: #dc0032;
 }
 
-/* --- TIMELINE STYLES --- */
+/*TIMELINE STYLES */
 .timeline-container {
   flex: 1;
   position: relative;

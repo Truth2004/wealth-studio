@@ -216,7 +216,7 @@
   line-height: 1.4;
 }
 
-/* --- COHESIVE VERDICT STYLING --- */
+/* OHESIVE VERDICT STYLING */
 .verdict-card {
   background-color: #ffffff;
   border-radius: 16px;
@@ -366,9 +366,6 @@
   color: #d4af37;
 }
 
-/* =========================================
-   RENT VS BUY EQUILIBRIUM SPECIFICS
-========================================= */
 
 .rvb-page-header {
   display: flex;
@@ -429,7 +426,7 @@
   color: #1a1a1a;
 }
 
-/* --- GRID LAYOUT --- */
+/* GRID LAYOUt */
 .rvb-main-grid {
   display: grid;
   grid-template-columns: 320px 1fr;
@@ -558,7 +555,7 @@
   color: #fff;
 }
 
-/* --- ADVISOR CARD (UPDATED TO RED) --- */
+/* ADVISOR CARD */
 .rvb-advisor-card {
   background-color: #dc0032;
   border-radius: 16px;
@@ -630,7 +627,7 @@
   background-color: #f4f4f5;
 }
 
-/* --- MAIN VERDICT CARD --- */
+/* MAIN VERDICT CARD */
 .rvb-verdict-card {
   background-color: #ffffff;
   border-radius: 16px;
@@ -741,7 +738,7 @@
   font-weight: 700;
 }
 
-/* --- BOTTOM SPLIT CARDS --- */
+/* BOTTOM SPLIT CARD */
 .rvb-split-row {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -857,7 +854,7 @@
   cursor: pointer;
 }
 
-/* --- FORMULAS MODAL (CLEAN PORTAL VERSION) --- */
+/* FORMULAS MODAL */
 .rvb-modal-overlay {
   position: fixed;
   top: 0; 
@@ -944,7 +941,7 @@
   to { opacity: 1; }
 }
 
-/* --- DYNAMIC THEME & UTILITY CLASSES --- */
+/* DYNAMIC THEME & UTILITY CLASSES */
 .rvb-back-link {
   display: inline-flex;
   align-items: center;
@@ -1449,7 +1446,7 @@
   margin-bottom: 32px;
 }
 
-/* --- VERDICT AFFORDABILITY ADDITIONS --- */
+/* VERDICT AFFORDABILITY ADDITIONS */
 .verdict-divider {
   height: 1px;
   background-color: #eaeaea;
