@@ -1,21 +1,49 @@
-import { createContext, useState, useContext } from 'react';
+import { createContext, useState, useContext, useEffect } from 'react';
 
 const FinancialContext = createContext();
 
 export const FinancialProvider = ({ children }) => {
-  const [financials, setFinancials] = useState({
-    username: '',
-    grossSalary: 0,
-    fixedCosts: 0,
-    monthlyDebt: 0,
-    netIncome: 0,
-    activeTrack: null,
+  // Initialize state from localStorage (Lazy Initialization)
+  const [financials, setFinancials] = useState(() => {
+    const savedData = localStorage.getItem('nextgen_financials');
     
+    if (savedData) {
+      try {
+        return JSON.parse(savedData);
+      } catch (error) {
+        console.error("Failed to parse financials from local storage:", error);
+      }
+    }
     
-    currentSavings: 0,      // Drives Milestone 1 (Emergency Fund)
-    currentRA: 0,           // Drives Milestone 2 (Tax Optimization)
-    targetHomePrice: 0,     // Drives Milestone 4 (Property Deposit)
+    return {
+      username: '',
+      grossSalary: 0,
+      
+      // Breakdown Categories
+      housingCosts: 0,
+      mobilityCosts: 0,
+      lifestyleCosts: 0,
+      
+      // Debt Tracking
+      monthlyDebt: 0, 
+      totalDebt: 0,   
+      
+      netIncome: 0,
+      activeTrack: null,
+      
+      // Advanced Goals / Current Balances
+      currentSavings: 0,      
+      currentRA: 0,           
+      targetHomePrice: 0,     
+      currentTFSA: 0,        // New: Total accrued lifetime tax-free balance
+      liquidInvestments: 0,  // New: Non-retirement investment capital (ETFs/Brokerage)
+    };
   });
+
+  // Automatically sync to localStorage whenever state changes
+  useEffect(() => {
+    localStorage.setItem('nextgen_financials', JSON.stringify(financials));
+  }, [financials]);
 
   const updateFinancials = (newData) => {
     setFinancials((prev) => ({ ...prev, ...newData }));

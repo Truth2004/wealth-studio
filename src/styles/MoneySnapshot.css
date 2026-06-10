@@ -90,7 +90,6 @@
   margin-top: 24px;
 }
 
-
 .input-card {
   background-color: #ffffff;
   padding: 32px;
@@ -163,7 +162,6 @@
   outline: none;
 }
 
-
 .advanced-toggle-btn {
   display: flex;
   align-items: center;
@@ -206,7 +204,6 @@
 .calc-button:hover {
   background-color: #b30029;
 }
-
 
 .result-card {
   background-color: #ffffff;
@@ -336,14 +333,18 @@
   border-radius: 50%;
 }
 
-/* Breakdown colors */
-.bg-needs { background-color: #dc0032; }
-.bg-debt { background-color: #d4af37; }
-.bg-leftover { background-color: #00a2e8; }
+/* NEW Breakdown Colors */
+.bg-housing { background-color: #dc0032; }
+.bg-mobility { background-color: #d4af37; }
+.bg-lifestyle { background-color: #9333ea; }
+.bg-debt { background-color: #1a1a1a; }
+.bg-savings { background-color: #2e7d32; }
 
-.text-needs { color: #dc0032; }
-.text-debt { color: #d4af37; }
-.text-leftover { color: #00a2e8; }
+.text-housing { color: #dc0032; }
+.text-mobility { color: #d4af37; }
+.text-lifestyle { color: #9333ea; }
+.text-debt { color: #1a1a1a; }
+.text-savings { color: #2e7d32; }
 
 .breakdown-label {
   font-size: 12px;
@@ -358,4 +359,3 @@
   font-weight: 600;
   color: #1a1a1a;
 }
-

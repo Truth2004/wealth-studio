@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import { TrendingUp, ShieldCheck, Home, Globe, CircleArrowRight, CircleX } from 'lucide-react';
+import { TrendingUp, ShieldCheck, Home, Globe, CircleArrowRight, CircleX, Star } from 'lucide-react';
 import TopBar from '../components/TopBar';
 import { useFinancials } from '../context/FinancialContext'; 
 import Explainer from '../components/Explainer';
@@ -7,8 +7,29 @@ import '../styles/StrategyTracks.css';
 
 const StrategyTracks = () => {
   const navigate = useNavigate();
-  const { updateFinancials } = useFinancials();
+  const { financials, updateFinancials } = useFinancials();
 
+  // === DYNAMIC RECOMMENDATION ENGINE ===
+  const determineRecommendedTrack = () => {
+    const totalDebt = financials.totalDebt || 0;
+    const netIncome = financials.netIncome || 0;
+    const currentSavings = financials.currentSavings || 0;
+
+    // Rule 1: If they have significant debt (> R15,000), they MUST clear it first
+    if (totalDebt > 15000) {
+      return 'debt-free';
+    } 
+    // Rule 2: If they have high income & good savings, push global investing
+    else if (netIncome >= 60000 && currentSavings >= 150000) {
+      return 'global-investor';
+    } 
+    // Rule 3: Default middle-ground (Stable, low debt, looking to build assets)
+    else {
+      return 'property-seeker';
+    }
+  };
+
+  const recommendedTrackId = determineRecommendedTrack();
 
   const tracksData = [
     {
@@ -77,48 +98,59 @@ const StrategyTracks = () => {
         </div>
 
         <div className="tracks-grid">
-          {tracksData.map((track) => (
-            <div className="track-card" key={track.id}>
-              
-              <div className="track-icon-wrapper">
-                {track.icon}
+          {tracksData.map((track) => {
+            const isRecommended = track.id === recommendedTrackId;
+
+            return (
+              <div className={`track-card ${isRecommended ? 'recommended' : ''}`} key={track.id}>
+                
+                {/* Dynamically render the Recommended Badge if matched */}
+                {isRecommended && (
+                  <div className="recommended-badge">
+                    <Star size={12} fill="#2e7d32" /> Recommended For You
+                  </div>
+                )}
+
+                <div className="track-icon-wrapper">
+                  {track.icon}
+                </div>
+                
+                <h3>{track.title}</h3>
+                
+                <p className="track-desc">{track.description}</p>
+                
+                {/*Prioritizes section*/}
+                <div className="track-section-label push-down">What it prioritizes</div>
+                <ul className="track-list">
+                  {track.prioritizes.map((item, index) => (
+                    <li key={index}>
+                      <CircleArrowRight className="list-icon-green" />
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+
+                {/* Avoids Section */}
+                <div className="track-section-label">What it avoids</div>
+                <ul className="track-list last">
+                  {track.avoids.map((item, index) => (
+                    <li key={index}>
+                      <CircleX className="list-icon-red" />
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+
+                <button 
+                  className="select-button" 
+                  onClick={() => handleSelectTrack(track.id)}
+                  disabled={!track.isActive}
+                >
+                  {track.isActive ? 'Select this track' : 'Still in development'}
+                </button>
               </div>
-              
-              <h3>{track.title}</h3>
-              
-              <p className="track-desc">{track.description}</p>
-              
-              {/*Prioritizes section*/}
-              <div className="track-section-label push-down">What it prioritizes</div>
-              <ul className="track-list">
-                {track.prioritizes.map((item, index) => (
-                  <li key={index}>
-                    <CircleArrowRight className="list-icon-green" />
-                    <span>{item}</span>
-                  </li>
-                ))}
-              </ul>
-
-              {/* Avoids Section (Red Circular X's) */}
-              <div className="track-section-label">What it avoids</div>
-              <ul className="track-list last">
-                {track.avoids.map((item, index) => (
-                  <li key={index}>
-                    <CircleX className="list-icon-red" />
-                    <span>{item}</span>
-                  </li>
-                ))}
-              </ul>
-
-              <button 
-                className="select-button" 
-                onClick={() => handleSelectTrack(track.id)}
-                disabled={!track.isActive}
-              >
-                {track.isActive ? 'Select this track' : 'Still in development'}
-              </button>
-            </div>
-          ))}
+            );
+          })}
         </div>
 
       </div>

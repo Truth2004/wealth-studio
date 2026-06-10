@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Home, ArrowLeft, Star, ArrowRight, Shield, CheckSquare, Square, FileText } from 'lucide-react';
-import confetti from 'canvas-confetti'; // <-- 1. Imported confetti
+import confetti from 'canvas-confetti'; 
 import TopBar from '../components/TopBar';
 import { useFinancials } from '../context/FinancialContext'; 
 import Explainer from '../components/Explainer';
@@ -14,13 +14,19 @@ const PropertySeeker = () => {
   const formatZAR = (amount) => amount.toLocaleString('en-ZA', { minimumFractionDigits: 0, maximumFractionDigits: 0 });
 
   // === DATA-DRIVEN MATH & PROJECTIONS ===
-  const netIncome = financials.netIncome || 45000;
-  const fixedCosts = financials.fixedCosts || 18000;
-  const monthlyDebt = financials.monthlyDebt || 4000;
+  const netIncome = financials.netIncome || 0;
+  
+  // Aggregate the new refined breakdown categories to replace fixedCosts
+  const housing = financials.housingCosts || 0;
+  const mobility = financials.mobilityCosts || 0;
+  const lifestyle = financials.lifestyleCosts || 0;
+  const totalFixedCosts = housing + mobility + lifestyle;
+
+  const monthlyDebt = financials.monthlyDebt || 0;
   const currentSavings = financials.currentSavings || 0;
   
   // Property specific targets
-  const targetHomePrice = financials.targetHomePrice || 1800000;
+  const targetHomePrice = financials.targetHomePrice || 0;
   const depositPercent = 0.10; 
   const transferCostPercent = 0.05; 
 
@@ -28,8 +34,8 @@ const PropertySeeker = () => {
   const transferCosts = targetHomePrice * transferCostPercent;
   const totalCashNeeded = depositRequired + transferCosts;
   
-  // Calculate Savings Timeline
-  const currentDisposable = Math.max(0, netIncome - fixedCosts - monthlyDebt);
+  // Calculate Savings Timeline using unified breakdown metrics
+  const currentDisposable = Math.max(0, netIncome - totalFixedCosts - monthlyDebt);
   const houseSavingsAllocation = currentDisposable * 0.4; 
   
   const cashShortfall = Math.max(0, totalCashNeeded - currentSavings);
@@ -39,17 +45,18 @@ const PropertySeeker = () => {
   const savingsProgressPercent = totalCashNeeded > 0 ? Math.min(100, Math.round((currentSavings / totalCashNeeded) * 100)) : 0;
 
   // Calculate Affordability (Est 11.75% over 20 years)
-  const principalLoan = targetHomePrice - depositRequired;
+  const principalLoan = Math.max(0, targetHomePrice - depositRequired);
   const monthlyRate = 0.1175 / 12;
   const totalMonths = 240;
-  const estBondPayment = (principalLoan * monthlyRate * Math.pow(1 + monthlyRate, totalMonths)) / (Math.pow(1 + monthlyRate, totalMonths) - 1);
+  const estBondPayment = loanAmount => loanAmount > 0 ? (loanAmount * monthlyRate * Math.pow(1 + monthlyRate, totalMonths)) / (Math.pow(1 + monthlyRate, totalMonths) - 1) : 0;
+  const finalBondPayment = estBondPayment(principalLoan);
   
-  const isAffordable = estBondPayment <= (netIncome * 0.35);
+  const isAffordable = netIncome > 0 ? finalBondPayment <= (netIncome * 0.35) : false;
 
   // === DYNAMIC COMPLETION LOGIC ===
   const autoCompleted = {
-    1: monthlyDebt <= (netIncome * 0.15), 
-    2: currentSavings >= totalCashNeeded, 
+    1: netIncome > 0 ? monthlyDebt <= (netIncome * 0.15) : false, 
+    2: currentSavings >= totalCashNeeded && totalCashNeeded > 0, 
     3: false, 
     4: false, 
     5: false  
@@ -57,17 +64,15 @@ const PropertySeeker = () => {
 
   const isMilestoneCompleted = (id) => autoCompleted[id] || manualChecks[id];
 
-  // <-- 2. Updated toggle function to fire confetti
   const toggleMilestone = (id) => {
     const alreadyDone = isMilestoneCompleted(id);
 
-    // Only pop confetti if we are marking it as done for the first time
     if (!alreadyDone) {
       confetti({
         particleCount: 100,
         spread: 70,
         origin: { y: 0.6 },
-        colors: ['#dc0032', '#d4af37', '#2e7d32'] // Absa Red, Gold, Green
+        colors: ['#dc0032', '#d4af37', '#2e7d32'] 
       });
     }
 
@@ -95,7 +100,7 @@ const PropertySeeker = () => {
             </div>
             <div className="data-row">
               <span>Est. Bond Repayment:</span>
-              <span>R {formatZAR(estBondPayment)}/mo</span>
+              <span>R {formatZAR(finalBondPayment)}/mo</span>
             </div>
             <div className="data-row bold">
               <span>Affordability Status:</span>
@@ -134,9 +139,11 @@ const PropertySeeker = () => {
             <span>R {formatZAR(currentSavings)} / R {formatZAR(totalCashNeeded)}</span>
             <span className="progress-percentage">{isMilestoneCompleted(2) ? '100' : savingsProgressPercent}%</span>
           </div>
-          <div className="progress-track">
-            <div className="progress-fill" style={{ width: `${isMilestoneCompleted(2) ? 100 : savingsProgressPercent}%` }}></div>
-          </div>
+          <progress 
+            className="ps-step-progress" 
+            value={isMilestoneCompleted(2) ? 100 : savingsProgressPercent} 
+            max="100"
+          ></progress>
         </div>
       )
     },
@@ -172,7 +179,7 @@ const PropertySeeker = () => {
         <div className="milestone-section">
           <p className="milestone-text-top">The attorneys will register the bond at the Deeds Office (this takes about 6-8 weeks). Once registered, the property is legally yours. Welcome home.</p>
           <div className="feature-badge ps-mt-12">
-            <span className="feature-icon-box"><Home size={16} color="#2e7d32" /></span> 
+            <span className="feature-icon-box"><Home size={16} className="icon-green" /></span> 
             Track Complete
           </div>
         </div>
@@ -202,13 +209,13 @@ const PropertySeeker = () => {
 
   // === DYNAMIC NOTIFICATION LOGIC ===
   const dynamicNotifications = [];
-  if (!isAffordable) {
+  if (targetHomePrice > 0 && !isAffordable) {
     dynamicNotifications.push({
       title: 'Affordability Warning',
-      message: `A bond for R ${formatZAR(targetHomePrice)} requires an estimated R ${formatZAR(estBondPayment)}/mo. This exceeds the recommended 35% of your net income. Consider a lower target price.`
+      message: `A bond for R ${formatZAR(targetHomePrice)} requires an estimated R ${formatZAR(finalBondPayment)}/mo. This exceeds the recommended 35% of your net income. Consider a lower target price.`
     });
   }
-  if (currentSavings >= totalCashNeeded && isAffordable) {
+  if (currentSavings >= totalCashNeeded && isAffordable && totalCashNeeded > 0) {
     dynamicNotifications.push({
       title: 'Ready to Buy',
       message: 'You have the required cash on hand and fit the affordability criteria. You are ready to apply for Pre-Approval!'
@@ -307,9 +314,11 @@ const PropertySeeker = () => {
                 <h4 className="track-progress-title">Track Progression</h4>
                 <div className="track-progress-value">{overallProgressPercent}%</div>
               </div>
-              <div className="track-progress-bar-bg">
-                <div className="track-progress-bar-fill" style={{ width: `${overallProgressPercent}%` }}></div>
-              </div>
+              <progress 
+                className="ps-main-progress" 
+                value={overallProgressPercent} 
+                max="100"
+              ></progress>
             </div>
 
             <div className="timeline-container">
@@ -343,7 +352,7 @@ const PropertySeeker = () => {
           {/* COLUMN 3: SIDEBAR */}
           <div className="suggestions-sidebar">
             <div className="suggestions-header">
-              <Star size={20} fill="#1a1a1a" color="#1a1a1a" /> 
+              <Star size={20} className="icon-dark-fill" /> 
               ABSA ACCELERATORS
             </div>
 

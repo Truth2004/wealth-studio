@@ -15,37 +15,42 @@ const DebtFreeStarter = () => {
 
   // === DATA-DRIVEN MATH & PROJECTIONS ===
   const netIncome = financials.netIncome || 0;
-  const fixedCosts = financials.fixedCosts || 0;
+  
+  // Aggregate the new breakdown categories
+  const housing = financials.housingCosts || 0;
+  const mobility = financials.mobilityCosts || 0;
+  const lifestyle = financials.lifestyleCosts || 0;
+  const totalFixedCosts = housing + mobility + lifestyle;
+  
   const currentSavings = financials.currentSavings || 0;
   
-  // Safe fallbacks if totalDebt isn't in context yet (for demo purposes)
-  const totalDebt = financials.totalDebt || 125000; 
-  const minDebtPayment = financials.monthlyDebt || 4500;
-  const currentDisposable = Math.max(0, netIncome - fixedCosts - minDebtPayment);
+  // Directly targeting the new global totalDebt state
+  const totalDebt = financials.totalDebt || 0; 
+  const minDebtPayment = financials.monthlyDebt || 0;
+  const currentDisposable = Math.max(0, netIncome - totalFixedCosts - minDebtPayment);
 
   // Accelerated Debt Plan Math
-  // We advise applying 50% of free cashflow directly to debt
   const extraDebtPayment = currentDisposable * 0.5; 
   const acceleratedMonthlyPayment = minDebtPayment + extraDebtPayment;
   const monthsToFreedom = acceleratedMonthlyPayment > 0 ? Math.ceil(totalDebt / acceleratedMonthlyPayment) : 0;
   const yearsToFreedom = (monthsToFreedom / 12).toFixed(1);
 
   // Buffer Goals
-  const baseBufferTarget = fixedCosts * 1; // 1-month "Starter" emergency fund
+  const baseBufferTarget = totalFixedCosts * 1; 
   const baseBufferProgress = baseBufferTarget > 0 ? Math.min(100, Math.round((currentSavings / baseBufferTarget) * 100)) : 0;
   
-  const fullFundTarget = fixedCosts * 3; // 3-month "Fully Funded" emergency fund
+  const fullFundTarget = totalFixedCosts * 3; 
   
   // Post-Debt Wealth Rate
-  const projectedMonthlyInvestment = currentDisposable + minDebtPayment; // Debt money becomes investment money
+  const projectedMonthlyInvestment = currentDisposable + minDebtPayment; 
 
   // === DYNAMIC COMPLETION LOGIC ===
   const autoCompleted = {
     1: baseBufferProgress >= 100,
     2: totalDebt <= 0, 
     3: currentSavings >= fullFundTarget,
-    4: false, // Manual setup of investments
-    5: false  // Manual lifestyle reward
+    4: false, 
+    5: false  
   };
 
   const isMilestoneCompleted = (id) => autoCompleted[id] || manualChecks[id];
@@ -58,7 +63,7 @@ const DebtFreeStarter = () => {
         particleCount: 100,
         spread: 70,
         origin: { y: 0.6 },
-        colors: ['#dc0032', '#d4af37', '#2e7d32'] // Absa Red, Gold, Green
+        colors: ['#dc0032', '#d4af37', '#2e7d32'] 
       });
     }
 
@@ -69,7 +74,7 @@ const DebtFreeStarter = () => {
   };
 
   // ==========================================
-  // TIMELINE DATA (Data-Responsive Milestones)
+  // TIMELINE DATA
   // ==========================================
   const rawMilestones = [
     {
@@ -83,9 +88,11 @@ const DebtFreeStarter = () => {
             <span>R {formatZAR(currentSavings)} / R {formatZAR(baseBufferTarget)} Target</span>
             <span className="progress-percentage">{isMilestoneCompleted(1) ? '100' : baseBufferProgress}%</span>
           </div>
-          <div className="progress-track">
-            <div className="progress-fill" style={{ width: `${isMilestoneCompleted(1) ? 100 : baseBufferProgress}%` }}></div>
-          </div>
+          <progress 
+            className="dfs-step-progress" 
+            value={isMilestoneCompleted(1) ? 100 : baseBufferProgress} 
+            max="100"
+          ></progress>
         </div>
       )
     },
@@ -140,7 +147,7 @@ const DebtFreeStarter = () => {
         <div className="milestone-section">
           <p className="milestone-text-top">You are now legally debt-free with a full emergency fund. It is time to open an investment portfolio (like a TFSA or ETF) and set up an automatic debit order for your new surplus.</p>
           <div className="feature-badge dfs-mt-12">
-            <span className="feature-icon-box"><TrendingDown size={16} color="#2e7d32" /></span> 
+            <span className="feature-icon-box"><TrendingDown size={16} className="icon-green" /></span> 
             Monthly Investment Rate: R {formatZAR(projectedMonthlyInvestment)}
           </div>
         </div>
@@ -184,13 +191,13 @@ const DebtFreeStarter = () => {
 
   // === DYNAMIC NOTIFICATION LOGIC ===
   const dynamicNotifications = [];
-  if ((minDebtPayment / netIncome) > 0.3) {
+  if (netIncome > 0 && (minDebtPayment / netIncome) > 0.3) {
     dynamicNotifications.push({
       title: 'High Debt Burden',
       message: 'Your monthly debt obligations exceed 30% of your net income. Committing to this track is critical for your financial health.'
     });
   }
-  if (currentDisposable < 1000) {
+  if (currentDisposable < 1000 && netIncome > 0) {
     dynamicNotifications.push({
       title: 'Cashflow Warning',
       message: 'Your disposable income is very tight. Consider reviewing your fixed costs to accelerate your timeline.'
@@ -205,7 +212,7 @@ const DebtFreeStarter = () => {
       id: 1,
       tag: "FOR STEP 2",
       title: "ABSA Debt Consolidation",
-      description: <>If you have multiple high-interest debts, consolidating them into a single Absa personal loan at a lower fixed interest rate could shave months off your timeline.</>,
+      description: "If you have multiple high-interest debts, consolidating them into a single Absa personal loan at a lower fixed interest rate could shave months off your timeline.",
       cta: "Calculate Savings"
     },
     {
@@ -237,7 +244,7 @@ const DebtFreeStarter = () => {
               The <span className="text-gold">Debt Free</span> Starter
             </h1>
             <p className="strategy-subtitle">
-              This mathematical timeline is strictly customized to your Money Snapshot. It calculates your exact timeline to $0 debt if you systematically redirect 50% of your current free cashflow. Mark off steps as you complete them to progress.
+              This mathematical timeline is strictly customized to your Money Snapshot. It calculates your exact timeline to R0 debt if you systematically redirect 50% of your current free cashflow. Mark off steps as you complete them to progress.
             </p>
           </div>
         </div>
@@ -281,9 +288,11 @@ const DebtFreeStarter = () => {
                 <h4 className="track-progress-title">Track Progression</h4>
                 <div className="track-progress-value">{overallProgressPercent}%</div>
               </div>
-              <div className="track-progress-bar-bg">
-                <div className="track-progress-bar-fill" style={{ width: `${overallProgressPercent}%` }}></div>
-              </div>
+              <progress 
+                className="dfs-main-progress" 
+                value={overallProgressPercent} 
+                max="100"
+              ></progress>
             </div>
 
             <div className="timeline-container">
@@ -317,7 +326,7 @@ const DebtFreeStarter = () => {
           {/* COLUMN 3: SIDEBAR */}
           <div className="suggestions-sidebar">
             <div className="suggestions-header">
-              <Star size={20} fill="#1a1a1a" color="#1a1a1a" /> 
+              <Star size={20} className="icon-dark-fill" /> 
               ABSA ACCELERATORS
             </div>
 

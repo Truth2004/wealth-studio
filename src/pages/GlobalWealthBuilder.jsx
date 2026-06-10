@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Globe, ArrowLeft, Star, ArrowRight, Shield, CheckSquare, Square, TrendingUp, Compass, Landmark } from 'lucide-react';
+import { Globe, ArrowLeft, Star, ArrowRight, Shield, CheckSquare, Square, TrendingDown, Compass, Landmark } from 'lucide-react';
 import confetti from 'canvas-confetti'; 
 import TopBar from '../components/TopBar';
 import { useFinancials } from '../context/FinancialContext'; 
@@ -14,17 +14,23 @@ const GlobalWealthBuilder = () => {
   const formatZAR = (amount) => amount.toLocaleString('en-ZA', { minimumFractionDigits: 0, maximumFractionDigits: 0 });
 
   // === DATA-DRIVEN MATH & PROJECTIONS ===
-  const netIncome = financials.netIncome || 65000;
-  const fixedCosts = financials.fixedCosts || 22000;
-  const monthlyDebt = financials.monthlyDebt || 0; // Renters target zero debt
-  const currentSavings = financials.currentSavings || 50000;
+  const netIncome = financials.netIncome || 0;
+  
+  // Aggregate the new refined breakdown categories
+  const housing = financials.housingCosts || 0;
+  const mobility = financials.mobilityCosts || 0;
+  const lifestyle = financials.lifestyleCosts || 0;
+  const totalFixedCosts = housing + mobility + lifestyle;
 
-  // Calculate Aggressive Surplus Capital
-  const currentDisposable = Math.max(0, netIncome - fixedCosts - monthlyDebt);
-  const wealthAllocation = currentDisposable * 0.75; // Renters allocate 75% of surplus directly to paper assets
+  const monthlyDebt = financials.monthlyDebt || 0; 
+  const currentSavings = financials.currentSavings || 0;
+
+  // Calculate Aggressive Surplus Capital based on new breakdown metrics
+  const currentDisposable = Math.max(0, netIncome - totalFixedCosts - monthlyDebt);
+  const wealthAllocation = currentDisposable * 0.75; 
   
   // Track Core Directives
-  const tfsaMonthlyTarget = 3000; // R36,000 / 12 months
+  const tfsaMonthlyTarget = 3000; 
   const tfsaProgressPercent = Math.min(100, Math.round((wealthAllocation / tfsaMonthlyTarget) * 100));
   
   const offshoreSurplus = Math.max(0, wealthAllocation - tfsaMonthlyTarget);
@@ -39,11 +45,11 @@ const GlobalWealthBuilder = () => {
 
   // === DYNAMIC COMPLETION LOGIC ===
   const autoCompleted = {
-    1: currentSavings >= (fixedCosts * 2), // Exit/mobility runway ready
-    2: wealthAllocation >= tfsaMonthlyTarget, // Monthly flow handles maxing out TFSA
-    3: offshoreSurplus > 2000, // Enough cash flow to justify direct USD routing
-    4: false, // Manual milestone for passport/SDR setup
-    5: false  // Location independence check
+    1: currentSavings >= (totalFixedCosts * 2), 
+    2: wealthAllocation >= tfsaMonthlyTarget, 
+    3: offshoreSurplus > 2000, 
+    4: false, 
+    5: false  
   };
 
   const toggleMilestone = (id) => {
@@ -54,7 +60,7 @@ const GlobalWealthBuilder = () => {
         particleCount: 100,
         spread: 70,
         origin: { y: 0.6 },
-        colors: ['#dc0032', '#d4af37', '#9333ea'] // Absa Red, Gold, Purple
+        colors: ['#dc0032', '#d4af37', '#9333ea'] 
       });
     }
 
@@ -80,7 +86,7 @@ const GlobalWealthBuilder = () => {
           <div className="data-box">
             <div className="data-row">
               <span>Required Cash Buffer:</span>
-              <span>R {formatZAR(fixedCosts * 2)}</span>
+              <span>R {formatZAR(totalFixedCosts * 2)}</span>
             </div>
           </div>
         </div>
@@ -97,9 +103,11 @@ const GlobalWealthBuilder = () => {
             <span>R {formatZAR(Math.min(wealthAllocation, tfsaMonthlyTarget))} / R {formatZAR(tfsaMonthlyTarget)} Monthly Target</span>
             <span className="progress-percentage">{isMilestoneCompleted(2) ? '100' : tfsaProgressPercent}%</span>
           </div>
-          <div className="progress-track">
-            <div className="progress-fill" style={{ width: `${isMilestoneCompleted(2) ? 100 : tfsaProgressPercent}%` }}></div>
-          </div>
+          <progress 
+            className="gwb-step-progress" 
+            value={isMilestoneCompleted(2) ? 100 : tfsaProgressPercent} 
+            max="100"
+          ></progress>
         </div>
       )
     },
@@ -141,7 +149,7 @@ const GlobalWealthBuilder = () => {
         <div className="milestone-section">
           <p className="milestone-text-top">Your paper asset compound interest machine now operates on autopilot. Your liquid global portfolio yields completely hedge or outpace your domestic rental overheads, unlocking geographical flexibility.</p>
           <div className="feature-badge gwb-mt-12">
-            <span className="feature-icon-box"><Compass size={16} color="#9333ea" /></span> 
+            <span className="feature-icon-box"><Compass size={16} className="icon-purple" /></span> 
             Track Complete: Global Nomad Status achieved
           </div>
         </div>
@@ -177,7 +185,7 @@ const GlobalWealthBuilder = () => {
       message: `You have R ${formatZAR(monthlyDebt)} in debt tracking. To achieve high-velocity global mobility, target a 100% debt-free profile.`
     });
   }
-  if (wealthAllocation >= tfsaMonthlyTarget) {
+  if (netIncome > 0 && wealthAllocation >= tfsaMonthlyTarget) {
     dynamicNotifications.push({
       title: 'TFSA Shield Fully Covered',
       message: 'Excellent. Your current surplus comfortably fills the annual local tax protection limit. The spillway is ready for offshore routing.'
@@ -185,22 +193,22 @@ const GlobalWealthBuilder = () => {
   }
 
   // ==========================================
-  // ABSA SUGGESTIONS DATA
+  // ABSA SUGGESTIONS DATA (Added to fix the 500 error)
   // ==========================================
   const absaSuggestions = [
     {
       id: 1,
       tag: "FOR STEP 2",
-      title: "Absa Global Feeder Funds",
-      description: "Saturate your local TFSA limit by routing your initial R3,000 monthly allocation into automated Absa offshore tracking funds, mirroring global equity indexes with zero capital gains exposure.",
-      cta: "Explore Feeder Portfolios"
+      title: "Absa Tax-Free Savings",
+      description: "Automate your R36,000 annual TFSA allocation directly through your banking app to ensure you never miss your maximum tax shield.",
+      cta: "Setup TFSA"
     },
     {
       id: 2,
       tag: "FOR STEP 3",
-      title: "Direct Offshore Inward/Outward Routing",
-      description: "Utilize your single discretionary allowance directly inside your banking portal to swap Rands into direct USD, EUR, or GBP wallets at optimized institutional rates.",
-      cta: "View Currency Wallets"
+      title: "Absa Global Trading",
+      description: "Externalize your wealth. Use our platform to invest directly in international markets, buying USD and EUR denominated ETFs.",
+      cta: "Open Account"
     }
   ];
 
@@ -268,9 +276,11 @@ const GlobalWealthBuilder = () => {
                 <h4 className="track-progress-title">Track Progression</h4>
                 <div className="track-progress-value">{overallProgressPercent}%</div>
               </div>
-              <div className="track-progress-bar-bg">
-                <div className="track-progress-bar-fill" style={{ width: `${overallProgressPercent}%` }}></div>
-              </div>
+              <progress 
+                className="gwb-main-progress" 
+                value={overallProgressPercent} 
+                max="100"
+              ></progress>
             </div>
 
             <div className="timeline-container">
@@ -304,7 +314,7 @@ const GlobalWealthBuilder = () => {
           {/* COLUMN 3: SIDEBAR */}
           <div className="suggestions-sidebar">
             <div className="suggestions-header">
-              <Star size={20} fill="#1a1a1a" color="#1a1a1a" /> 
+              <Star size={20} className="icon-dark-fill" /> 
               ABSA ACCELERATORS
             </div>
 

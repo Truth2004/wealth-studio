@@ -5,12 +5,15 @@ import { ArrowLeft, SlidersHorizontal, ShieldCheck, CheckCircle2, Info, ChevronR
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, BarElement, Tooltip, Filler } from 'chart.js';
 import { Line } from 'react-chartjs-2';
 import TopBar from '../components/TopBar';
+import { useFinancials } from '../context/FinancialContext'; // Connected to your upgraded global state
 import Explainer from '../components/Explainer';
 import '../styles/TaxFree.css';
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, BarElement, Tooltip, Filler);
 
 const TaxFreeBoosterModule = () => {
+  const { financials } = useFinancials();
+
   // === STATE ===
   const [monthlyContribution, setMonthlyContribution] = useState(3000);
   const [expectedReturn, setExpectedReturn] = useState(10);
@@ -27,34 +30,42 @@ const TaxFreeBoosterModule = () => {
   const cgtInclusionRate = 0.40;
   const taxDrag = 0.015; 
 
+  // Pull existing ecosystem values dynamically from Money Snapshot
+  const initialPrincipal = financials.currentTFSA || 0; 
+  const remainingLifetimeRoom = Math.max(0, lifetimeLimit - initialPrincipal);
+
   const monthsPassed = horizon * 12;
   const monthlyRateTFSA = expectedReturn / 100 / 12;
   const monthlyRateTaxable = (expectedReturn / 100 - taxDrag) / 12;
 
-  // 1. Calculate the capping point
-  const monthsToMax = Math.floor(lifetimeLimit / monthlyContribution);
+  // 1. Calculate the capping point accounting for existing context balances
+  const monthsToMax = Math.floor(remainingLifetimeRoom / monthlyContribution);
   const actualContributingMonths = Math.min(monthsPassed, monthsToMax);
   const passiveMonths = monthsPassed - actualContributingMonths;
-  const totalContributions = actualContributingMonths * monthlyContribution;
+  const totalNewContributions = actualContributingMonths * monthlyContribution;
+  const totalAggregateContributions = initialPrincipal + totalNewContributions;
   const isCapped = monthsPassed > monthsToMax;
 
-  // 2. Future Values
-  let tfsaPhase1 = monthlyContribution * ((Math.pow(1 + monthlyRateTFSA, actualContributingMonths) - 1) / monthlyRateTFSA);
-  let taxablePhase1 = monthlyContribution * ((Math.pow(1 + monthlyRateTaxable, actualContributingMonths) - 1) / monthlyRateTaxable);
+  // 2. Future Values (Upgraded to Principal + Annuity Compounding)
+  const tfsaPhase1 = (initialPrincipal * Math.pow(1 + monthlyRateTFSA, actualContributingMonths)) + 
+                     (monthlyContribution * ((Math.pow(1 + monthlyRateTFSA, actualContributingMonths) - 1) / monthlyRateTFSA));
+                     
+  const taxablePhase1 = (initialPrincipal * Math.pow(1 + monthlyRateTaxable, actualContributingMonths)) + 
+                        (monthlyContribution * ((Math.pow(1 + monthlyRateTaxable, actualContributingMonths) - 1) / monthlyRateTaxable));
 
   const tfsaFV = tfsaPhase1 * Math.pow(1 + monthlyRateTFSA, passiveMonths);
   const taxableGrossFV = taxablePhase1 * Math.pow(1 + monthlyRateTaxable, passiveMonths);
 
   // 3. Liquidation Capital Gains Tax
-  const taxableProfit = taxableGrossFV - totalContributions;
+  const taxableProfit = taxableGrossFV - totalAggregateContributions;
   const taxableCapitalGain = Math.max(0, taxableProfit - annualExclusionCGT);
   const cgtTax = taxableCapitalGain * cgtInclusionRate * (marginalTaxRate / 100);
   const finalTaxableValue = taxableGrossFV - cgtTax;
 
   // 4. The Results
   const taxSaved = tfsaFV - finalTaxableValue;
-  const tfsaGrowth = tfsaFV - totalContributions;
-  const taxableGrowthAfterTax = finalTaxableValue - totalContributions;
+  const tfsaGrowth = tfsaFV - totalAggregateContributions;
+  const taxableGrowthAfterTax = finalTaxableValue - totalAggregateContributions;
 
   // === CHART.JS DATA GENERATION ===
   const labels = [];
@@ -67,13 +78,16 @@ const TaxFreeBoosterModule = () => {
     let actMonths = Math.min(m, monthsToMax);
     let pasMonths = m - actMonths;
     
-    let t1 = monthlyContribution * ((Math.pow(1 + monthlyRateTFSA, actMonths) - 1) / monthlyRateTFSA);
+    let t1 = (initialPrincipal * Math.pow(1 + monthlyRateTFSA, actMonths)) + 
+             (monthlyContribution * ((Math.pow(1 + monthlyRateTFSA, actMonths) - 1) / monthlyRateTFSA));
     let valTFSA = t1 * Math.pow(1 + monthlyRateTFSA, pasMonths);
     
-    let tx1 = monthlyContribution * ((Math.pow(1 + monthlyRateTaxable, actMonths) - 1) / monthlyRateTaxable);
+    let tx1 = (initialPrincipal * Math.pow(1 + monthlyRateTaxable, actMonths)) + 
+              (monthlyContribution * ((Math.pow(1 + monthlyRateTaxable, actMonths) - 1) / monthlyRateTaxable));
     let valTaxGross = tx1 * Math.pow(1 + monthlyRateTaxable, pasMonths);
     
-    let cgt = Math.max(0, (valTaxGross - (actMonths*monthlyContribution)) - annualExclusionCGT) * cgtInclusionRate * (marginalTaxRate / 100);
+    let currentNewContrib = actMonths * monthlyContribution;
+    let cgt = Math.max(0, (valTaxGross - (initialPrincipal + currentNewContrib)) - annualExclusionCGT) * cgtInclusionRate * (marginalTaxRate / 100);
     
     tfsaData.push(valTFSA);
     taxableData.push(valTaxGross - cgt);
@@ -139,7 +153,9 @@ const TaxFreeBoosterModule = () => {
               <div className="tf-formula-desc">1. Capped Contribution Logic</div>
               <div className="tf-formula-block">
                 SA Lifetime Limit = R 500,000<br/>
-                Months to Cap = FLOOR(500000 / {monthlyContribution}) = {monthsToMax} months<br/>
+                Existing Accrued Balance (P) = R {formatZAR(initialPrincipal)}<br/>
+                Remaining Lifetime Room = R {formatZAR(remainingLifetimeRoom)}<br/>
+                Months to Cap = FLOOR({remainingLifetimeRoom} / {monthlyContribution}) = {monthsToMax} months<br/>
                 {isCapped ? `Status: CAPPED (Portfolio compounds passively for final ${passiveMonths} months)` : 'Status: UNCAPPED (Within lifetime limit)'}
               </div>
             </div>
@@ -147,7 +163,7 @@ const TaxFreeBoosterModule = () => {
             <div className="tf-formula-group">
               <div className="tf-formula-desc">2. Capital Gains Tax (Liquidation)</div>
               <div className="tf-formula-block">
-                Total Profit = Gross FV - Total Contributions<br/>
+                Total Profit = Gross FV - (Initial Balance + New Contributions)<br/>
                 Taxable Gain = MAX(0, Total Profit - R40,000 Annual Exclusion)<br/>
                 CGT = Taxable Gain × 40% Inclusion Rate × Marginal Tax Rate ({marginalTaxRate}%)<br/><br/>
                 CGT Triggered = R {formatZAR(cgtTax)}
@@ -289,9 +305,9 @@ const TaxFreeBoosterModule = () => {
                 </div>
                 <ul className="tf-impact-list">
                   {isCapped ? (
-                    <li><strong className="text-green">The R500k Ceiling Hit:</strong> Because you contributed R{formatZAR(monthlyContribution)}/mo, you hit the lifetime limit in <strong>Year {(monthsToMax/12).toFixed(1)}</strong>. After this, your portfolio enters a pure, passive tax-free compounding phase.</li>
+                    <li><strong className="text-green">The R500k Ceiling Hit:</strong> With an existing base of R{formatZAR(initialPrincipal)} and your new contribution rate, you hit the lifetime limit in <strong>Year {(monthsToMax/12).toFixed(1)}</strong>. After this, your portfolio enters a pure, passive tax-free compounding phase.</li>
                   ) : (
-                    <li><strong className="text-green">Contribution Room:</strong> You will contribute R{formatZAR(totalContributions)} over this period, leaving room before hitting the R500,000 lifetime limit.</li>
+                    <li><strong className="text-green">Contribution Room:</strong> You will add R{formatZAR(totalNewContributions)} in new deposits over this period, leaving room before hitting the R500,000 lifetime limit.</li>
                   )}
                   <li><strong>CGT Shield:</strong> If you liquidated the standard account at Year {horizon}, SARS would claim <strong className="text-purple">R{formatZAR(cgtTax)}</strong> in Capital Gains Tax. Your TFSA protects this entirely.</li>
                   <li><strong>Annual Tax Drag Avoided:</strong> Standard accounts lose roughly ~1.5% of growth annually to dividend and interest taxes, suppressing compound interest.</li>
@@ -321,7 +337,7 @@ const TaxFreeBoosterModule = () => {
                 <h4 className="tf-sub-title">Taxable Account Build</h4>
                 
                 <div className="tf-bar-container">
-                  <div className="tf-bar-top"><span>Contributions</span><span>R{formatZAR(totalContributions)}</span></div>
+                  <div className="tf-bar-top"><span>Total Capital Base</span><span>R{formatZAR(totalAggregateContributions)}</span></div>
                   <div className="tf-thick-bar"><div className="tf-fill-base tf-w-100"></div></div>
                 </div>
 
@@ -340,7 +356,7 @@ const TaxFreeBoosterModule = () => {
                 <h4 className="tf-sub-title">TFSA Build</h4>
                 
                 <div className="tf-bar-container">
-                  <div className="tf-bar-top"><span>Contributions</span><span>R{formatZAR(totalContributions)}</span></div>
+                  <div className="tf-bar-top"><span>Total Capital Base</span><span>R{formatZAR(totalAggregateContributions)}</span></div>
                   <div className="tf-thick-bar"><div className="tf-fill-base tf-w-100"></div></div>
                 </div>
 

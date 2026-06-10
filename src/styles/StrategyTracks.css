@@ -28,7 +28,6 @@
   margin: 0;
 }
 
-
 .tracks-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -43,6 +42,30 @@
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
   display: flex;
   flex-direction: column;
+  border: 2px solid transparent;
+  transition: all 0.3s ease;
+}
+
+/* The highlighted state for the recommended track */
+.track-card.recommended {
+  border-color: #2e7d32;
+  box-shadow: 0 8px 24px rgba(46, 125, 50, 0.12);
+}
+
+.recommended-badge {
+  background-color: #e8f5e9;
+  color: #2e7d32;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 6px 12px;
+  border-radius: 20px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin-bottom: 16px;
+  align-self: flex-start;
 }
 
 .track-icon-wrapper {
@@ -84,7 +107,6 @@
   line-height: 1.5;
 }
 
-
 .track-list {
   list-style: none;
   padding: 0;
@@ -104,7 +126,6 @@
   gap: 8px;
   line-height: 1.4;
 }
-
 
 .select-button {
   width: 100%;
@@ -134,7 +155,6 @@
 .select-button:disabled:hover {
   background-color: #e4e4e7;
 }
-
 
 .list-icon-green {
   flex-shrink: 0;

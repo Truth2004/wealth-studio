@@ -14,18 +14,28 @@ const MoneySnapshot = () => {
 
   const [inputs, setInputs] = useState({
     grossSalary: financials.grossSalary || '',
-    fixedCosts: financials.fixedCosts || '',
+    housingCosts: financials.housingCosts || '',
+    mobilityCosts: financials.mobilityCosts || '',
+    lifestyleCosts: financials.lifestyleCosts || '',
     monthlyDebt: financials.monthlyDebt || '',
+    totalDebt: financials.totalDebt || '', 
     currentSavings: financials.currentSavings || '',
     currentRA: financials.currentRA || '',
-    targetHomePrice: financials.targetHomePrice || ''
+    targetHomePrice: financials.targetHomePrice || '',
+    currentTFSA: financials.currentTFSA || '',         // Linked to Context
+    liquidInvestments: financials.liquidInvestments || '' // Linked to Context
   });
 
   const [showAdvanced, setShowAdvanced] = useState(false);
 
   const [takeHomePay, setTakeHomePay] = useState(financials.netIncome || 0);
+  
   const [disposableIncome, setDisposableIncome] = useState(
-    (financials.netIncome || 0) - (financials.fixedCosts || 0) - (financials.monthlyDebt || 0)
+    (financials.netIncome || 0) - 
+    (financials.housingCosts || 0) - 
+    (financials.mobilityCosts || 0) - 
+    (financials.lifestyleCosts || 0) - 
+    (financials.monthlyDebt || 0)
   );
 
   const handleChange = (e) => {
@@ -40,8 +50,11 @@ const MoneySnapshot = () => {
     e.preventDefault();
 
     const gross = Number(inputs.grossSalary) || 0;
-    const fixed = Number(inputs.fixedCosts) || 0;
-    const debt = Number(inputs.monthlyDebt) || 0;
+    const housing = Number(inputs.housingCosts) || 0;
+    const mobility = Number(inputs.mobilityCosts) || 0;
+    const lifestyle = Number(inputs.lifestyleCosts) || 0;
+    const monthlyDebt = Number(inputs.monthlyDebt) || 0;
+    const totalDebt = Number(inputs.totalDebt) || 0;
 
     let taxRate = 0;
     const annualSalary = gross * 12;
@@ -54,33 +67,40 @@ const MoneySnapshot = () => {
 
     const estimatedTax = gross * taxRate;
     const netPay = gross - estimatedTax;
-    const leftover = netPay - fixed - debt;
+    const leftover = netPay - housing - mobility - lifestyle - monthlyDebt;
 
     setTakeHomePay(netPay);
     setDisposableIncome(leftover);
 
     updateFinancials({
       grossSalary: gross,
-      fixedCosts: fixed,
-      monthlyDebt: debt,
+      housingCosts: housing,
+      mobilityCosts: mobility,
+      lifestyleCosts: lifestyle,
+      monthlyDebt: monthlyDebt,
+      totalDebt: totalDebt,
       netIncome: netPay,
       currentSavings: Number(inputs.currentSavings) || 0,
       currentRA: Number(inputs.currentRA) || 0,
-      targetHomePrice: Number(inputs.targetHomePrice) || 0
+      targetHomePrice: Number(inputs.targetHomePrice) || 0,
+      currentTFSA: Number(inputs.currentTFSA) || 0,
+      liquidInvestments: Number(inputs.liquidInvestments) || 0
     });
   };
 
   const formatZAR = (amount) => amount.toLocaleString('en-ZA', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 
-  const needsValue = Number(inputs.fixedCosts) || 0;
+  const housingValue = Number(inputs.housingCosts) || 0;
+  const mobilityValue = Number(inputs.mobilityCosts) || 0;
+  const lifestyleValue = Number(inputs.lifestyleCosts) || 0;
   const debtValue = Number(inputs.monthlyDebt) || 0;
   const leftoverValue = Math.max(0, disposableIncome); 
 
   const chartData = {
-    labels: ['Needs', 'Debts', 'Leftover'],
+    labels: ['Housing', 'Mobility', 'Lifestyle', 'Debts', 'Savings'],
     datasets: [{
-      data: [needsValue, debtValue, leftoverValue],
-      backgroundColor: ['#dc0032', '#d4af37', '#00a2e8'],
+      data: [housingValue, mobilityValue, lifestyleValue, debtValue, leftoverValue],
+      backgroundColor: ['#dc0032', '#d4af37', '#9333ea', '#1a1a1a', '#2e7d32'], 
       borderWidth: 0,
       hoverOffset: 4
     }],
@@ -99,7 +119,6 @@ const MoneySnapshot = () => {
           <p className="snapshot-welcome-desc">Financial architecture and disposable income analysis.</p>
         </div>
 
-       
         <div className="blueprint-section">
           <div className="blueprint-header">
             <h2 className="blueprint-title">Your Blueprint Begins Here.</h2>
@@ -111,7 +130,7 @@ const MoneySnapshot = () => {
             <div className="blueprint-column">
               <h3>The Foundation</h3>
               <p>
-                As a virtual financial sandbox, the NextGen Wealth app is designed to bridge the gap between your current reality and your ultimate goals. By recording everything from your monthly fixed costs to your high-interest debt, this tool transforms overwhelming numbers into a clear baseline. Take the first step toward controlling your capital before exploring new strategies or simulating your future. We thrive on data-driven planning and believe the best outcomes come from fully understanding your exact starting point.
+                As a virtual financial sandbox, the NextGen Wealth app is designed to bridge the gap between your current reality and your ultimate goals. By recording everything from your monthly fixed costs to your high-interest debt, this tool transforms overwhelming numbers into a clear baseline. Take the first step toward controlling your capital before exploring new strategies or simulating your future.
               </p>
             </div>
             
@@ -131,7 +150,6 @@ const MoneySnapshot = () => {
           </div>
         </div>
     
-
         <div className="snapshot-grid">
           <div className="input-card h-fit">
             <h3>Input Your Financials</h3>
@@ -152,21 +170,47 @@ const MoneySnapshot = () => {
               <div className="form-group">
                 <label>
                   <Explainer 
-                    term="Total Fixed Costs" 
-                    explanation="Essential recurring expenses you must pay every month to survive. This includes rent, groceries, electricity, and basic insurance." 
+                    term="Housing Costs" 
+                    explanation="Rent, bond repayments, levies, rates, and home maintenance." 
                   />
                 </label>
                 <div className="input-wrapper">
                   <span className="currency-symbol">R</span>
-                  <input type="number" name="fixedCosts" className="financial-input" placeholder="0.00" value={inputs.fixedCosts} onChange={handleChange} />
+                  <input type="number" name="housingCosts" className="financial-input" placeholder="0.00" value={inputs.housingCosts} onChange={handleChange} />
                 </div>
               </div>
 
               <div className="form-group">
                 <label>
                   <Explainer 
-                    term="Total Monthly Debt" 
-                    explanation="The minimum required payments on money you owe. This includes personal loans, vehicle finance, and minimum credit card installments." 
+                    term="Mobility Costs" 
+                    explanation="Car installments, fuel, vehicle insurance, and public transport or ride-shares." 
+                  />
+                </label>
+                <div className="input-wrapper">
+                  <span className="currency-symbol">R</span>
+                  <input type="number" name="mobilityCosts" className="financial-input" placeholder="0.00" value={inputs.mobilityCosts} onChange={handleChange} />
+                </div>
+              </div>
+
+              <div className="form-group">
+                <label>
+                  <Explainer 
+                    term="Lifestyle Costs" 
+                    explanation="Groceries, dining out, subscriptions, and entertainment." 
+                  />
+                </label>
+                <div className="input-wrapper">
+                  <span className="currency-symbol">R</span>
+                  <input type="number" name="lifestyleCosts" className="financial-input" placeholder="0.00" value={inputs.lifestyleCosts} onChange={handleChange} />
+                </div>
+              </div>
+
+              <div className="form-group">
+                <label>
+                  <Explainer 
+                    term="Monthly Debt Installment" 
+                    explanation="The minimum required payments on money you owe. This includes personal loans and credit card installments (excluding home/car loans mentioned above)." 
                   />
                 </label>
                 <div className="input-wrapper">
@@ -175,7 +219,6 @@ const MoneySnapshot = () => {
                 </div>
               </div>
 
-             
               <div 
                 className="advanced-toggle-btn"
                 onClick={() => setShowAdvanced(!showAdvanced)}
@@ -189,6 +232,19 @@ const MoneySnapshot = () => {
                   <div className="form-group">
                     <label>
                       <Explainer 
+                        term="Total Outstanding Debt" 
+                        explanation="The complete overall balance you still owe across all loans combined (credit cards, personal loans, car loans). This dictates your timeline to freedom." 
+                      />
+                    </label>
+                    <div className="input-wrapper">
+                      <span className="currency-symbol">R</span>
+                      <input type="number" name="totalDebt" className="financial-input" placeholder="0.00" value={inputs.totalDebt} onChange={handleChange} />
+                    </div>
+                  </div>
+
+                  <div className="form-group">
+                    <label>
+                      <Explainer 
                         term="Total Current Savings" 
                         explanation="Liquid cash readily available in a savings or checking account. This acts as your emergency fund buffer." 
                       />
@@ -196,12 +252,41 @@ const MoneySnapshot = () => {
                     <div className="input-wrapper">
                       <span className="currency-symbol">R</span>
                       <input type="number" name="currentSavings" className="financial-input" placeholder="0.00" value={inputs.currentSavings} onChange={handleChange} />
-                    </div>
+                </div>
                   </div>
+
+                  {/* NEW FIELD: Current TFSA Balance */}
                   <div className="form-group">
                     <label>
                       <Explainer 
-                        term="Current Monthly RA Contribution" 
+                        term="Existing TFSA Balance" 
+                        explanation="The total amount of money you currently have sitting inside all Tax-Free Savings Accounts combined. Helps gauge your remaining lifetime limit allowance." 
+                      />
+                    </label>
+                    <div className="input-wrapper">
+                      <span className="currency-symbol">R</span>
+                      <input type="number" name="currentTFSA" className="financial-input" placeholder="0.00" value={inputs.currentTFSA} onChange={handleChange} />
+                    </div>
+                  </div>
+
+                  {/* NEW FIELD: Taxable Brokerage Accounts */}
+                  <div className="form-group">
+                    <label>
+                      <Explainer 
+                        term="Taxable Investments" 
+                        explanation="Total value of standard trading portfolios, shares, and ETFs held outside of retirement and tax-free structures. Vulnerable to regular tax drag." 
+                      />
+                    </label>
+                    <div className="input-wrapper">
+                      <span className="currency-symbol">R</span>
+                      <input type="number" name="liquidInvestments" className="financial-input" placeholder="0.00" value={inputs.liquidInvestments} onChange={handleChange} />
+                    </div>
+                  </div>
+
+                  <div className="form-group">
+                    <label>
+                      <Explainer 
+                        term="Current Monthly RA" 
                         explanation="Money you deposit into a Retirement Annuity each month. These contributions are tax-deductible up to 27.5% of your income." 
                       />
                     </label>
@@ -210,6 +295,7 @@ const MoneySnapshot = () => {
                       <input type="number" name="currentRA" className="financial-input" placeholder="0.00" value={inputs.currentRA} onChange={handleChange} />
                     </div>
                   </div>
+
                   <div className="form-group mb-0">
                     <label>Target Home Price</label>
                     <div className="input-wrapper">
@@ -267,10 +353,24 @@ const MoneySnapshot = () => {
               <div className="chart-breakdown">
                 <div className="breakdown-item">
                   <div className="breakdown-header">
-                    <div className="color-dot bg-needs"></div>
-                    <span className="breakdown-label">Essential Costs (Needs)</span>
+                    <div className="color-dot bg-housing"></div>
+                    <span className="breakdown-label text-housing">Housing</span>
                   </div>
-                  <span className="breakdown-amount">R {formatZAR(needsValue)}</span>
+                  <span className="breakdown-amount">R {formatZAR(housingValue)}</span>
+                </div>
+                <div className="breakdown-item">
+                  <div className="breakdown-header">
+                    <div className="color-dot bg-mobility"></div>
+                    <span className="breakdown-label text-mobility">Mobility</span>
+                  </div>
+                  <span className="breakdown-amount">R {formatZAR(mobilityValue)}</span>
+                </div>
+                <div className="breakdown-item">
+                  <div className="breakdown-header">
+                    <div className="color-dot bg-lifestyle"></div>
+                    <span className="breakdown-label text-lifestyle">Lifestyle</span>
+                  </div>
+                  <span className="breakdown-amount">R {formatZAR(lifestyleValue)}</span>
                 </div>
                 <div className="breakdown-item">
                   <div className="breakdown-header">
@@ -281,8 +381,8 @@ const MoneySnapshot = () => {
                 </div>
                 <div className="breakdown-item">
                   <div className="breakdown-header">
-                    <div className="color-dot bg-leftover"></div>
-                    <span className="breakdown-label text-leftover">Disposable / Savings</span>
+                    <div className="color-dot bg-savings"></div>
+                    <span className="breakdown-label text-savings">Disposable / Savings</span>
                   </div>
                   <span className="breakdown-amount">R {formatZAR(leftoverValue)}</span>
                 </div>

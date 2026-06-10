@@ -128,7 +128,69 @@
   margin: 24px 0;
 }
 
-/* --- OVERALL TRACK PROGRESS BAR --- */
+/* --- NATIVE HTML5 PROGRESS BARS --- */
+progress.gwb-main-progress {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 8px;
+  border: none;
+  border-radius: 4px;
+  background-color: #eaeaea; 
+}
+
+progress.gwb-main-progress::-webkit-progress-bar {
+  background-color: #eaeaea;
+  border-radius: 4px;
+}
+
+progress.gwb-main-progress::-webkit-progress-value {
+  background: linear-gradient(90deg, #dc0032 0%, #ff4d4d 100%);
+  border-radius: 4px;
+  transition: width 0.6s ease-out;
+}
+
+progress.gwb-main-progress::-moz-progress-bar {
+  background: linear-gradient(90deg, #dc0032 0%, #ff4d4d 100%);
+  border-radius: 4px;
+}
+
+progress.gwb-step-progress {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 6px;
+  border: none;
+  border-radius: 4px;
+  background-color: #eaeaea;
+  margin-bottom: 16px;
+}
+
+progress.gwb-step-progress::-webkit-progress-bar {
+  background-color: #eaeaea;
+  border-radius: 4px;
+}
+
+progress.gwb-step-progress::-webkit-progress-value {
+  background-color: #dc0032;
+  border-radius: 4px;
+  transition: width 0.5s ease;
+}
+
+progress.gwb-step-progress::-moz-progress-bar {
+  background-color: #dc0032;
+  border-radius: 4px;
+}
+
+.timeline-item.completed progress.gwb-step-progress::-webkit-progress-value {
+  background-color: #2e7d32; 
+}
+
+.timeline-item.completed progress.gwb-step-progress::-moz-progress-bar {
+  background-color: #2e7d32; 
+}
+
+/* --- OVERALL TRACK PROGRESS CONTAINER --- */
 .track-overall-progress {
   background-color: #ffffff;
   padding: 24px;
@@ -159,21 +221,6 @@
   font-family: 'Lexend', sans-serif;
   font-weight: 700;
   color: #dc0032;
-}
-
-.track-progress-bar-bg {
-  width: 100%;
-  height: 8px;
-  background-color: #eaeaea;
-  border-radius: 4px;
-  overflow: hidden;
-}
-
-.track-progress-bar-fill {
-  height: 100%;
-  background: linear-gradient(90deg, #dc0032 0%, #ff4d4d 100%);
-  border-radius: 4px;
-  transition: width 0.6s ease-out;
 }
 
 /* --- TIMELINE STYLES --- */
@@ -355,24 +402,6 @@
   color: #dc0032;
 }
 
-.progress-track {
-  background-color: #eaeaea;
-  height: 6px;
-  border-radius: 4px;
-  margin-bottom: 16px;
-}
-
-.progress-fill {
-  background-color: #dc0032;
-  height: 100%;
-  border-radius: 4px;
-  transition: width 0.5s ease;
-}
-
-.timeline-item.completed .progress-fill {
-  background-color: #2e7d32; 
-}
-
 .timeline-item.completed .progress-percentage {
   color: #2e7d32;
 }
@@ -477,4 +506,13 @@
 /* UTILITY CLASSES */
 .gwb-mt-12 {
   margin-top: 12px;
+}
+
+.icon-purple {
+  color: #9333ea;
+}
+
+.icon-dark-fill {
+  color: #1a1a1a;
+  fill: #1a1a1a;
 }
