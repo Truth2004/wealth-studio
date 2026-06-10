@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Database, ChevronDown, ChevronUp } from 'lucide-react';
+import { Database, ChevronDown, ChevronUp, AlertTriangle, CheckCircle2, Info, Activity } from 'lucide-react';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import { Doughnut } from 'react-chartjs-2';
 import TopBar from '../components/TopBar';
@@ -22,8 +22,8 @@ const MoneySnapshot = () => {
     currentSavings: financials.currentSavings || '',
     currentRA: financials.currentRA || '',
     targetHomePrice: financials.targetHomePrice || '',
-    currentTFSA: financials.currentTFSA || '',         // Linked to Context
-    liquidInvestments: financials.liquidInvestments || '' // Linked to Context
+    currentTFSA: financials.currentTFSA || '',         
+    liquidInvestments: financials.liquidInvestments || '' 
   });
 
   const [showAdvanced, setShowAdvanced] = useState(false);
@@ -47,7 +47,7 @@ const MoneySnapshot = () => {
   };
 
   const calculateSnapshot = (e) => {
-    e.preventDefault();
+    if (e) e.preventDefault();
 
     const gross = Number(inputs.grossSalary) || 0;
     const housing = Number(inputs.housingCosts) || 0;
@@ -88,13 +88,62 @@ const MoneySnapshot = () => {
     });
   };
 
-  const formatZAR = (amount) => amount.toLocaleString('en-ZA', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  const formatZAR = (amount) => amount.toLocaleString('en-ZA', { minimumFractionDigits: 0, maximumFractionDigits: 0 });
 
   const housingValue = Number(inputs.housingCosts) || 0;
   const mobilityValue = Number(inputs.mobilityCosts) || 0;
   const lifestyleValue = Number(inputs.lifestyleCosts) || 0;
   const debtValue = Number(inputs.monthlyDebt) || 0;
   const leftoverValue = Math.max(0, disposableIncome); 
+
+  // === KEY FINANCIAL METRICS MATH ===
+  const grossVal = Number(inputs.grossSalary) || 0;
+  const dtiRatio = grossVal > 0 ? ((debtValue / grossVal) * 100).toFixed(1) : 0;
+  const lifestyleRate = takeHomePay > 0 ? ((lifestyleValue / takeHomePay) * 100).toFixed(1) : 0;
+  const savingsRate = takeHomePay > 0 ? ((leftoverValue / takeHomePay) * 100).toFixed(1) : 0;
+  const effectiveTaxRate = grossVal > 0 ? (((grossVal - takeHomePay) / grossVal) * 100).toFixed(1) : 0;
+
+  // === DYNAMIC INSIGHTS ENGINE ===
+  const generateInsights = () => {
+    if (grossVal === 0) return [];
+    const insights = [];
+
+    // Tax Insight
+    insights.push({
+      id: 'tax',
+      title: "Tax Conversion",
+      desc: `Your estimated effective tax rate is ${effectiveTaxRate}%. This converts your R ${formatZAR(grossVal)} gross salary to R ${formatZAR(takeHomePay)} net monthly.`,
+      type: "neutral",
+      icon: <Info size={18} />
+    });
+
+    // DTI Insight
+    if (dtiRatio > 36) {
+      insights.push({ id: 'dti', title: "High Debt Burden", desc: `Your Debt-to-Income ratio is ${dtiRatio}%. This is considered high risk by SA lenders. The Debt Free Starter track is highly recommended.`, type: "warning", icon: <AlertTriangle size={18} /> });
+    } else if (dtiRatio > 0) {
+      insights.push({ id: 'dti', title: "Healthy Debt Levels", desc: `Your Debt-to-Income ratio is ${dtiRatio}%, which is well within the healthy lending threshold (< 36%).`, type: "positive", icon: <CheckCircle2 size={18} /> });
+    } else {
+      insights.push({ id: 'dti', title: "Zero Debt Profile", desc: `You have a 0% Debt-to-Income ratio. This is the ultimate foundation for rapid wealth building and loan approvals.`, type: "positive", icon: <CheckCircle2 size={18} /> });
+    }
+
+    // Lifestyle Insight
+    if (lifestyleRate > 30) {
+      insights.push({ id: 'lifestyle', title: "Lifestyle Inflation", desc: `You are allocating ${lifestyleRate}% of your net income to lifestyle, which is higher than the standard 30% baseline. Watch for lifestyle creep.`, type: "warning", icon: <AlertTriangle size={18} /> });
+    } else {
+      insights.push({ id: 'lifestyle', title: "Optimized Lifestyle", desc: `You are allocating ${lifestyleRate}% to lifestyle, typical for your income band and keeping you perfectly within the 50/30/20 rule.`, type: "positive", icon: <CheckCircle2 size={18} /> });
+    }
+
+    // Savings Insight
+    if (savingsRate >= 20) {
+      insights.push({ id: 'savings', title: "Strong Savings Velocity", desc: `Your potential savings rate is ${savingsRate}%. You have excellent free cashflow to deploy into investments or property deposits.`, type: "positive", icon: <Activity size={18} /> });
+    } else {
+      insights.push({ id: 'savings', title: "Low Liquidity", desc: `Your potential savings rate is only ${savingsRate}%. Consider reviewing your fixed housing and mobility costs to unlock more capital.`, type: "warning", icon: <AlertTriangle size={18} /> });
+    }
+
+    return insights;
+  };
+
+  const insightsList = generateInsights();
 
   const chartData = {
     labels: ['Housing', 'Mobility', 'Lifestyle', 'Debts', 'Savings'],
@@ -149,8 +198,57 @@ const MoneySnapshot = () => {
             </div>
           </div>
         </div>
+
+        {/* --- FULL WIDTH DASHBOARD METRICS ROW --- */}
+        <div className="dashboard-metrics-row">
+          <div className="result-card">
+            <div>
+              <div className="card-label">
+                <Explainer 
+                  term="Take Home Pay" 
+                  explanation="Also known as Net Income. This is the actual cash that lands in your bank account after SARS deductions like PAYE and UIF are subtracted." 
+                />
+              </div>
+              <h2 className="card-amount">R {formatZAR(takeHomePay)}</h2>
+            </div>
+            <div className="card-subtext">EST. MONTHLY AFTER TAX</div>
+          </div>
+
+          <div className="result-card primary">
+            <div>
+              <div className="card-label">
+                <Explainer 
+                  term="Disposable Income" 
+                  explanation="Your financial ammunition. This is the money left over after essential needs and debts are paid. Use this pool to invest, save, or upgrade your lifestyle." 
+                  isDarkTheme={true}
+                />
+              </div>
+              <h2 className="card-amount">R {formatZAR(disposableIncome)}</h2>
+            </div>
+            <div className="card-subtext">LEFTOVER POOL</div>
+          </div>
+
+          <div className="result-card">
+            <div>
+              <div className="card-label">Debt-To-Income</div>
+              <h2 className={`card-amount ${dtiRatio > 36 ? 'text-red' : ''}`}>{dtiRatio}%</h2>
+            </div>
+            <div className="card-subtext">RISK THRESHOLD: 36%</div>
+          </div>
+
+          <div className="result-card">
+            <div>
+              <div className="card-label">Savings Capacity</div>
+              <h2 className={`card-amount ${savingsRate >= 20 ? 'text-green' : ''}`}>{savingsRate}%</h2>
+            </div>
+            <div className="card-subtext">TARGET MINIMUM: 20%</div>
+          </div>
+        </div>
     
+        {/* --- SPLIT LAYOUT GRID --- */}
         <div className="snapshot-grid">
+          
+          {/* LEFT SIDE: INPUT FORM */}
           <div className="input-card h-fit">
             <h3>Input Your Financials</h3>
             <form onSubmit={calculateSnapshot}>
@@ -252,10 +350,9 @@ const MoneySnapshot = () => {
                     <div className="input-wrapper">
                       <span className="currency-symbol">R</span>
                       <input type="number" name="currentSavings" className="financial-input" placeholder="0.00" value={inputs.currentSavings} onChange={handleChange} />
-                </div>
+                    </div>
                   </div>
 
-                  {/* NEW FIELD: Current TFSA Balance */}
                   <div className="form-group">
                     <label>
                       <Explainer 
@@ -269,7 +366,6 @@ const MoneySnapshot = () => {
                     </div>
                   </div>
 
-                  {/* NEW FIELD: Taxable Brokerage Accounts */}
                   <div className="form-group">
                     <label>
                       <Explainer 
@@ -310,86 +406,84 @@ const MoneySnapshot = () => {
             </form>
           </div>
 
-          <div className="result-card">
-            <div>
-              <div className="card-label">
-                <Explainer 
-                  term="Take Home Pay" 
-                  explanation="Also known as Net Income. This is the actual cash that lands in your bank account after SARS deductions like PAYE and UIF are subtracted." 
-                />
-              </div>
-              <h2 className="card-amount">R {formatZAR(takeHomePay)}</h2>
-            </div>
-            <div className="card-subtext">EST. MONTHLY AFTER TAX</div>
-          </div>
+          {/* RIGHT SIDE: ANALYTICS & INSIGHTS */}
+          <div className="results-column">
+            
+            <div className="chart-card">
+              <h3>Spending Distribution</h3>
+              <div className="chart-layout">
+                <div className="chart-container">
+                  {takeHomePay > 0 ? (
+                    <Doughnut data={chartData} options={chartOptions} />
+                  ) : (
+                    <div className="chart-empty-state">
+                      Calculate to see breakdown
+                    </div>
+                  )}
+                </div>
 
-          <div className="result-card primary">
-            <div>
-              <div className="card-label">
-                <Explainer 
-                  term="Disposable Income" 
-                  explanation="Your financial ammunition. This is the money left over after essential needs and debts are paid. Use this pool to invest, save, or upgrade your lifestyle." 
-                  isDarkTheme={true}
-                />
-              </div>
-              <h2 className="card-amount">R {formatZAR(disposableIncome)}</h2>
-            </div>
-            <div className="card-subtext">LEFTOVER POOL</div>
-          </div>
-
-          <div className="chart-card">
-            <h3>Spending Distribution</h3>
-            <div className="chart-layout">
-              <div className="chart-container">
-                {takeHomePay > 0 ? (
-                  <Doughnut data={chartData} options={chartOptions} />
-                ) : (
-                  <div className="chart-empty-state">
-                    Calculate to see breakdown
+                <div className="chart-breakdown">
+                  <div className="breakdown-item">
+                    <div className="breakdown-header">
+                      <div className="color-dot bg-housing"></div>
+                      <span className="breakdown-label text-housing">Housing</span>
+                    </div>
+                    <span className="breakdown-amount">R {formatZAR(housingValue)}</span>
                   </div>
-                )}
-              </div>
-
-              <div className="chart-breakdown">
-                <div className="breakdown-item">
-                  <div className="breakdown-header">
-                    <div className="color-dot bg-housing"></div>
-                    <span className="breakdown-label text-housing">Housing</span>
+                  <div className="breakdown-item">
+                    <div className="breakdown-header">
+                      <div className="color-dot bg-mobility"></div>
+                      <span className="breakdown-label text-mobility">Mobility</span>
+                    </div>
+                    <span className="breakdown-amount">R {formatZAR(mobilityValue)}</span>
                   </div>
-                  <span className="breakdown-amount">R {formatZAR(housingValue)}</span>
-                </div>
-                <div className="breakdown-item">
-                  <div className="breakdown-header">
-                    <div className="color-dot bg-mobility"></div>
-                    <span className="breakdown-label text-mobility">Mobility</span>
+                  <div className="breakdown-item">
+                    <div className="breakdown-header">
+                      <div className="color-dot bg-lifestyle"></div>
+                      <span className="breakdown-label text-lifestyle">Lifestyle</span>
+                    </div>
+                    <span className="breakdown-amount">R {formatZAR(lifestyleValue)}</span>
                   </div>
-                  <span className="breakdown-amount">R {formatZAR(mobilityValue)}</span>
-                </div>
-                <div className="breakdown-item">
-                  <div className="breakdown-header">
-                    <div className="color-dot bg-lifestyle"></div>
-                    <span className="breakdown-label text-lifestyle">Lifestyle</span>
+                  <div className="breakdown-item">
+                    <div className="breakdown-header">
+                      <div className="color-dot bg-debt"></div>
+                      <span className="breakdown-label text-debt">Debt Obligations</span>
+                    </div>
+                    <span className="breakdown-amount">R {formatZAR(debtValue)}</span>
                   </div>
-                  <span className="breakdown-amount">R {formatZAR(lifestyleValue)}</span>
-                </div>
-                <div className="breakdown-item">
-                  <div className="breakdown-header">
-                    <div className="color-dot bg-debt"></div>
-                    <span className="breakdown-label text-debt">Debt Obligations</span>
+                  <div className="breakdown-item">
+                    <div className="breakdown-header">
+                      <div className="color-dot bg-savings"></div>
+                      <span className="breakdown-label text-savings">Disposable / Savings</span>
+                    </div>
+                    <span className="breakdown-amount">R {formatZAR(leftoverValue)}</span>
                   </div>
-                  <span className="breakdown-amount">R {formatZAR(debtValue)}</span>
-                </div>
-                <div className="breakdown-item">
-                  <div className="breakdown-header">
-                    <div className="color-dot bg-savings"></div>
-                    <span className="breakdown-label text-savings">Disposable / Savings</span>
-                  </div>
-                  <span className="breakdown-amount">R {formatZAR(leftoverValue)}</span>
                 </div>
               </div>
             </div>
-          </div>
 
+            {/* PREMIUM EXECUTIVE SUMMARY */}
+            {insightsList.length > 0 && (
+              <div className="executive-insights-card">
+                <div className="executive-header">
+                  <h3 className="executive-title">Executive Summary</h3>
+                  <span className="executive-subtitle">Automated Audit</span>
+                </div>
+                <div className="executive-list">
+                  {insightsList.map(insight => (
+                    <div key={insight.id} className={`executive-item type-${insight.type}`}>
+                      <div className="executive-icon-wrapper">{insight.icon}</div>
+                      <div className="executive-content">
+                        <div className="executive-item-title">{insight.title}</div>
+                        <div className="executive-item-desc">{insight.desc}</div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+          </div>
         </div>
       </div>
     </>

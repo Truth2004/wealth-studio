@@ -1,165 +1,192 @@
+/* =========================================
+   MONEY SNAPSHOT SPECIFICS
+========================================= */
+
 .snapshot-welcome {
-  margin-bottom: 32px;
+  margin-bottom: 40px;
 }
 
 .snapshot-welcome-subtitle {
   color: #dc0032;
-  font-size: 18px;
-  margin-bottom: 8px;
-  margin-top: 0;
+  font-size: 14px;
+  font-weight: 700;
+  margin: 0 0 12px 0;
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
 
 .snapshot-welcome-title {
   font-size: 42px;
-  margin: 0;
   color: #1a1a1a;
+  margin: 0 0 16px 0;
+  letter-spacing: -0.5px;
 }
 
 .snapshot-welcome-desc {
   color: #666;
-  margin-top: 8px;
+  font-size: 16px;
+  margin: 0;
 }
 
 .text-gold {
   color: #d4af37;
 }
 
-/*Intro section*/
+/* --- Blueprint Section --- */
 .blueprint-section {
-  margin-top: 40px; 
-  padding-top: 48px; 
+  background-color: #fcfaf9; 
+  border-radius: 16px;
+  padding: 40px;
   margin-bottom: 48px;
-  padding-bottom: 48px;
-  border-top: 2px solid #1a1a1a;    
-  border-bottom: 2px solid #1a1a1a; 
+  border: 1px solid #eaeaea;
 }
 
 .blueprint-header {
-  text-align: center;
-  max-width: 880px; 
-  margin: 0 auto 56px auto; 
+  margin-bottom: 32px;
 }
 
 .blueprint-title {
-  display: inline-block; 
-  font-family: 'Lexend', sans-serif;
-  font-size: 18px;
-  font-weight: 700;
+  font-size: 24px;
   color: #1a1a1a;
-  margin-bottom: 16px;
-  padding-bottom: 12px;
-  border-bottom: 2px solid #1a1a1a;
-  line-height: 1.4;
+  margin: 0 0 16px 0;
 }
 
 .blueprint-intro {
-  font-size: 16px;
   color: #666;
-  line-height: 1.7;
+  font-size: 14px;
+  line-height: 1.6;
+  max-width: 800px;
   margin: 0;
 }
 
 .blueprint-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 40px;
+  gap: 32px;
 }
 
 .blueprint-column h3 {
-  font-family: 'Lexend', sans-serif;
-  font-size: 18px;
-  font-weight: 700;
-  color: #1a1a1a;
-  margin-bottom: 16px;
-  padding-bottom: 12px;
-  border-bottom: 2px solid #1a1a1a; 
+  font-size: 14px;
+  color: #dc0032;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin: 0 0 12px 0;
 }
 
 .blueprint-column p {
-  font-size: 14px;
   color: #666;
-  line-height: 1.7;
+  font-size: 13px;
+  line-height: 1.6;
   margin: 0;
 }
 
-/*My main layout*/
-.snapshot-grid {
+/* --- NEW DASHBOARD METRICS ROW --- */
+.dashboard-metrics-row {
   display: grid;
-  grid-template-columns: 350px 1fr 1fr;
+  grid-template-columns: repeat(4, 1fr);
   gap: 24px;
-  margin-top: 24px;
+  margin-bottom: 32px;
 }
 
-.input-card {
-  background-color: #ffffff;
-  padding: 32px;
-  border-radius: 16px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
-  grid-row: span 2; 
+/* --- Main Layout Grid --- */
+.snapshot-grid {
+  display: grid;
+  grid-template-columns: 360px 1fr;
+  gap: 32px;
+  align-items: start;
 }
 
 .h-fit {
   height: fit-content;
 }
 
+.results-column {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* --- Metric & Result Cards --- */
+.input-card, .result-card, .chart-card {
+  background-color: #ffffff;
+  padding: 32px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+}
+
 .input-card h3 {
-  font-family: 'Lexend', sans-serif;
   font-size: 18px;
-  margin-bottom: 24px;
   color: #1a1a1a;
-  text-transform: uppercase;
+  margin: 0 0 24px 0;
 }
 
 .form-group {
-  margin-bottom: 20px;
+  margin-bottom: 24px;
 }
 
-.mb-0 {
-  margin-bottom: 0 !important;
+.form-group.mb-0 {
+  margin-bottom: 0;
 }
 
 .form-group label {
   display: block;
   font-size: 12px;
-  font-weight: 600;
-  color: #dc0032; 
+  font-weight: 700;
+  color: #666;
   margin-bottom: 8px;
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
 
-.form-group p {
-  font-size: 12px;
-  color: #999;
-  margin-bottom: 8px;
-}
-
 .input-wrapper {
+  position: relative;
   display: flex;
   align-items: center;
-  background-color: #f4f4f5;
-  border-radius: 8px;
-  padding: 0 16px;
 }
 
 .currency-symbol {
-  color: #dc0032;
+  position: absolute;
+  left: 16px;
+  color: #999;
   font-weight: 600;
-  margin-right: 8px;
+  font-size: 16px;
 }
 
 .financial-input {
-  border: none;
-  background: transparent;
-  padding: 16px 0;
-  font-family: 'Inter', sans-serif;
-  font-size: 16px;
   width: 100%;
+  padding: 16px 16px 16px 40px;
+  border: 1px solid #eaeaea;
+  border-radius: 8px;
+  font-family: 'Lexend', sans-serif;
+  font-size: 16px;
   color: #1a1a1a;
+  outline: none;
+  transition: all 0.2s ease;
+  background-color: #fcfaf9;
 }
 
 .financial-input:focus {
-  outline: none;
+  border-color: #1a1a1a;
+  background-color: #ffffff;
+}
+
+.calc-button {
+  width: 100%;
+  background-color: #dc0032;
+  color: #ffffff;
+  border: none;
+  padding: 16px;
+  border-radius: 8px;
+  font-family: 'Lexend', sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  margin-top: 32px;
+}
+
+.calc-button:hover {
+  background-color: #b30029;
 }
 
 .advanced-toggle-btn {
@@ -167,12 +194,15 @@
   align-items: center;
   gap: 8px;
   color: #666;
-  font-size: 13px;
-  font-weight: 600;
-  cursor: pointer;
-  margin: 24px 0 16px 0;
+  font-size: 12px;
+  font-weight: 700;
   text-transform: uppercase;
-  transition: color 0.2s ease;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  padding: 16px 0;
+  border-top: 1px solid #eaeaea;
+  margin-top: 8px;
+  transition: color 0.2s;
 }
 
 .advanced-toggle-btn:hover {
@@ -180,137 +210,103 @@
 }
 
 .advanced-inputs-panel {
-  background-color: #f9f9f9;
-  padding: 16px;
-  border-radius: 8px;
-  margin-bottom: 16px;
+  padding-top: 16px;
+  animation: slideDown 0.3s ease-out forwards;
 }
 
-.calc-button {
-  width: 100%;
-  background-color: #dc0032;
-  color: white;
-  border: none;
-  padding: 16px;
-  border-radius: 8px;
-  font-family: 'Lexend', sans-serif;
-  font-weight: 600;
-  font-size: 16px;
-  cursor: pointer;
-  margin-top: 16px;
-  transition: background-color 0.2s ease;
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
-.calc-button:hover {
-  background-color: #b30029;
-}
-
+/* --- Results Cards --- */
 .result-card {
-  background-color: #ffffff;
-  padding: 32px;
-  border-radius: 16px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
 }
 
 .result-card.primary {
-  background-color: #dc0032;
-  color: white;
+  background-color: #1a1a1a;
+  color: #ffffff;
 }
 
 .card-label {
   font-size: 12px;
-  font-weight: 600;
+  font-weight: 700;
+  color: #999;
+  margin-bottom: 8px;
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  margin-bottom: 16px;
-}
-
-.result-card:not(.primary) .card-label {
-  color: #dc0032;
-}
-
-.result-card.primary .card-label,
-.result-card.primary .card-subtext {
-  color: rgba(255, 255, 255, 0.8);
 }
 
 .card-amount {
-  font-family: 'Lexend', sans-serif;
-  font-size: 48px;
-  font-weight: 700;
+  font-size: 32px;
   margin: 0;
 }
 
+.result-card.primary .card-amount {
+  color: #d4af37;
+}
+
 .card-subtext {
-  font-size: 12px;
-  margin-top: auto;
-  padding-top: 24px;
-}
-
-.result-card:not(.primary) .card-subtext {
-  color: #dc0032;
-  font-weight: 600;
-}
-
-/*Spending distribution chart*/
-.chart-card {
-  background-color: #ffffff;
-  padding: 32px;
-  border-radius: 16px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
-  grid-column: span 2; 
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-
-.chart-card h3 {
-  font-family: 'Lexend', sans-serif;
-  font-size: 18px;
-  margin-bottom: 32px;
-  color: #1a1a1a;
+  font-size: 10px;
+  font-weight: 700;
+  color: #999;
   text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-top: 32px;
+}
+
+.text-red { color: #dc0032; }
+.text-green { color: #2e7d32; }
+
+/* --- Chart Layout --- */
+.chart-card h3 {
+  font-size: 18px;
+  color: #1a1a1a;
+  margin: 0 0 32px 0;
 }
 
 .chart-layout {
   display: flex;
   align-items: center;
-  justify-content: space-around; 
-  gap: 32px;
+  gap: 48px;
 }
 
 .chart-container {
-  width: 200px; 
+  width: 200px;
   height: 200px;
   flex-shrink: 0;
+  position: relative;
 }
 
 .chart-empty-state {
-  height: 100%;
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #999;
   background-color: #f4f4f5;
   border-radius: 50%;
   font-size: 12px;
+  font-weight: 600;
+  color: #999;
   text-align: center;
-  padding: 16px;
+  padding: 20px;
 }
 
 .chart-breakdown {
   flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 16px;
 }
 
 .breakdown-item {
   display: flex;
-  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
   padding-bottom: 12px;
   border-bottom: 1px solid #eaeaea;
 }
@@ -324,21 +320,24 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  margin-bottom: 8px;
 }
 
 .color-dot {
-  width: 12px;
-  height: 12px;
+  width: 10px;
+  height: 10px;
   border-radius: 50%;
 }
 
-/* NEW Breakdown Colors */
 .bg-housing { background-color: #dc0032; }
 .bg-mobility { background-color: #d4af37; }
 .bg-lifestyle { background-color: #9333ea; }
 .bg-debt { background-color: #1a1a1a; }
 .bg-savings { background-color: #2e7d32; }
+
+.breakdown-label {
+  font-size: 12px;
+  font-weight: 600;
+}
 
 .text-housing { color: #dc0032; }
 .text-mobility { color: #d4af37; }
@@ -346,16 +345,103 @@
 .text-debt { color: #1a1a1a; }
 .text-savings { color: #2e7d32; }
 
-.breakdown-label {
-  font-size: 12px;
+.breakdown-amount {
+  font-family: 'Lexend', sans-serif;
+  font-size: 14px;
   font-weight: 600;
+  color: #1a1a1a;
+}
+
+/* --- PREMIUM EXECUTIVE SUMMARY --- */
+.executive-insights-card {
+  background-color: #ffffff;
+  padding: 40px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+  border: 1px solid #eaeaea;
+}
+
+.executive-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  padding-bottom: 20px;
+  border-bottom: 2px solid #1a1a1a;
+  margin-bottom: 8px;
+}
+
+.executive-title {
+  font-family: 'Lexend', sans-serif;
+  font-size: 20px;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin: 0;
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
 
-.breakdown-amount {
-  font-family: 'Lexend', sans-serif;
-  font-size: 20px;
-  font-weight: 600;
+.executive-subtitle {
+  font-size: 11px;
+  font-weight: 700;
+  color: #999;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.executive-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.executive-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+  padding: 24px 0;
+  border-bottom: 1px solid #eaeaea;
+}
+
+.executive-item:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.executive-icon-wrapper {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.executive-item.type-positive .executive-icon-wrapper {
+  background-color: #e8f5e9;
+  color: #2e7d32;
+}
+
+.executive-item.type-warning .executive-icon-wrapper {
+  background-color: #fff0f2;
+  color: #dc0032;
+}
+
+.executive-item.type-neutral .executive-icon-wrapper {
+  background-color: #f4f4f5;
   color: #1a1a1a;
+}
+
+.executive-item-title {
+  font-family: 'Lexend', sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin-bottom: 6px;
+}
+
+.executive-item-desc {
+  font-size: 13px;
+  color: #666;
+  line-height: 1.6;
+  margin: 0;
 }
