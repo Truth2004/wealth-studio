@@ -147,3 +147,137 @@
   text-align: center;
   padding: 12px 0;
 }
+
+/* --- SETTINGS DROPDOWN SPECIFICS --- */
+.settings-dropdown {
+  min-width: 260px;
+}
+
+.settings-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 8px 0;
+}
+
+.settings-info-text {
+  font-size: 12px;
+  color: #666;
+  line-height: 1.5;
+  padding: 0 4px;
+}
+
+.reset-data-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  background-color: #fff0f2;
+  color: #dc0032;
+  border: 1px solid #ffccd5;
+  padding: 12px;
+  border-radius: 8px;
+  font-family: 'Lexend', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.reset-data-btn:hover {
+  background-color: #dc0032;
+  color: #ffffff;
+}
+
+/* --- PROFILE DROPDOWN SPECIFICS --- */
+.profile-dropdown {
+  min-width: 240px;
+  padding: 16px;
+}
+
+.profile-header-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #eaeaea;
+}
+
+.profile-avatar-circle {
+  width: 40px;
+  height: 40px;
+  background-color: #1a1a1a;
+  color: #d4af37; /* Gold accent */
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Lexend', sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.profile-text-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.profile-name {
+  font-family: 'Lexend', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  color: #1a1a1a;
+}
+
+.profile-role {
+  font-size: 11px;
+  color: #999;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.profile-track-section {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 24px;
+}
+
+.profile-track-label {
+  font-size: 10px;
+  font-weight: 700;
+  color: #999;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.profile-track-value {
+  font-size: 13px;
+  font-weight: 600;
+  color: #1a1a1a;
+}
+
+.sign-out-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  background-color: #f4f4f5;
+  color: #1a1a1a;
+  border: 1px solid #eaeaea;
+  padding: 10px;
+  border-radius: 8px;
+  font-family: 'Lexend', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.sign-out-btn:hover {
+  background-color: #1a1a1a;
+  color: #ffffff;
+}
